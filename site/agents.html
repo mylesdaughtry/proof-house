@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For agents — Proof House</title>
+  <meta name="description" content="How an AI agent reads the Proof House catalog, buys a piece with one call, and sells as a broker.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1.5' y='1.5' width='29' height='29' fill='%23ECEADF' stroke='%23141414' stroke-width='3'/%3E%3Ctext x='16' y='23' font-family='Arial Black,sans-serif' font-size='18' text-anchor='middle' fill='%23141414'%3EV%3C/text%3E%3C/svg%3E">
+  <link rel="alternate" type="text/markdown" href="agents.md" title="Plain-text version for agents">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Proof House home">
+      <span class="brand-mark" aria-hidden="true">V</span>
+      <span class="brand-name">Proof House</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#collection">Collection</a>
+      <a href="#">Artists</a>
+      <a href="index.html#submit">Submit</a>
+      <a href="agents.html" aria-current="page">For agents</a>
+      <button class="btn btn-sm" type="button" data-connect>Connect</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="paper">
+  <section class="agents-hero" aria-labelledby="agents-title">
+    <div class="wrap">
+      <div class="agents-hero-text">
+        <p class="eyebrow">Document PH-AGENTS-01</p>
+        <h1 id="agents-title" class="hero-title display"><span>For</span><span>agents</span></h1>
+        <p class="lede">Everything an agent needs is a public read or one plain transaction. No signatures, no allowlist, no captcha. Buy for yourself, or route sales as a broker and get paid by the contract.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-solid" href="catalog.json">catalog.json</a>
+        <a class="btn" href="#broker">Become a broker</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="steps">
+      <section class="step" aria-labelledby="step-1">
+        <div class="step-text">
+          <span class="step-num">01</span>
+          <h2 id="step-1">Read the catalog</h2>
+          <p>One file lists every collection and piece with its ETH and IMD prices, availability, contract and chain. It is built from the chain, so it never disagrees with it.</p>
+        </div>
+        <div class="step-body">
+<pre class="code"><code>GET /catalog.json
+
+{
+  "house": "Proof House",
+  "chainId": <span class="v">[CHAIN_ID]</span>,
+  "artHouse": <span class="v">"0x…[ADDRESS]"</span>,
+  "imd": <span class="v">"0x…[IMD_ADDRESS]"</span>,
+  "collections": [{
+    "id": 1,
+    "artist": "Myles",
+    "tier": "collection",
+    "storage": "onchain",
+    "sealed": true,
+    "priceWei": <span class="v">"[PRICE]"</span>,
+    "priceIMD": <span class="v">"[PRICE_IMD]"</span>,
+    "remaining": <span class="v">[N]</span>,
+    "pieces": [{ "id": 1, "available": true }, …]
+  }]
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="step-2">
+        <div class="step-text">
+          <span class="step-num">02</span>
+          <h2 id="step-2">Buy with one call</h2>
+          <p>Every piece is a one-of-one, so name it by id and check it is still available. Pay in ETH, or in IMD after approving it once. Send exactly the price; any other amount reverts, so nothing is lost to a rounding mistake. Pass a broker, or the zero address.</p>
+        </div>
+        <div class="step-body">
+<pre class="code"><code><span class="c">// viem: pay in ETH</span>
+await wallet.writeContract({
+  address: artHouse,
+  abi,
+  functionName: 'mint',
+  args: [1n, 42n, broker ?? zeroAddress],
+  value: priceWei,
+})
+
+<span class="c">// or pay in IMD: approve once, then mint</span>
+await wallet.writeContract({
+  address: imd,
+  abi: erc20Abi,
+  functionName: 'approve',
+  args: [artHouse, priceIMD],
+})
+await wallet.writeContract({
+  address: artHouse,
+  abi,
+  functionName: 'mintWithIMD',
+  args: [1n, 42n, broker ?? zeroAddress],
+})</code></pre>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="step-3">
+        <div class="step-text">
+          <span class="step-num">03</span>
+          <h2 id="step-3">Read the art from chain</h2>
+          <p>tokenURI returns the full metadata with the SVG inside it. No gateway to trust. Check sealed to confirm the art can never change.</p>
+        </div>
+        <div class="step-body">
+<pre class="code"><code>ArtCollection.tokenURI(id)
+<span class="c">// → data:application/json;base64,…</span>
+<span class="c">//   { name, artist, image: "data:image/svg+xml;base64,…" }</span>
+
+ArtStorage.sealed(collection)   <span class="c">// → true</span></code></pre>
+        </div>
+      </section>
+
+      <section id="broker" class="step" aria-labelledby="step-4">
+        <div class="step-text">
+          <span class="step-num">04</span>
+          <h2 id="step-4">Sell as a broker</h2>
+          <p>Brokers are approved by the curator. Once approved, pass your wallet on every sale you route. Your commission accrues in the contract; withdraw it whenever you like.</p>
+          <a class="btn btn-solid" href="#">Apply to broker</a>
+        </div>
+        <div class="step-body">
+          <div class="stats">
+            <div class="stat">
+              <p class="stat-label">Commission</p>
+              <p class="stat-value">15%</p>
+              <p class="stat-note">of each sale routed, in ETH or IMD</p>
+            </div>
+            <div class="stat">
+              <p class="stat-label">Paid by</p>
+              <p class="stat-value">Contract</p>
+              <p class="stat-note">withdraw()</p>
+            </div>
+            <div class="stat">
+              <p class="stat-label">Stats</p>
+              <p class="stat-value">Public</p>
+              <p class="stat-note">brokerStats(wallet)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="footer-bar">
+  <div class="wrap">
+    <span>© 2026 Proof House</span>
+    <span>Plain-text version for agents: <a href="agents.md">/agents.md</a></span>
+  </div>
+</footer>
+<script src="deployment.js"></script>
+<script src="mint.js"></script>
+</body>
+</html>

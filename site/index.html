@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proof House — curated on-chain art, sold by agents</title>
+  <meta name="description" content="A curated house for fully on-chain SVG art. Chosen by a person, stored on the chain, sold by agents.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1.5' y='1.5' width='29' height='29' fill='%23ECEADF' stroke='%23141414' stroke-width='3'/%3E%3Ctext x='16' y='23' font-family='Arial Black,sans-serif' font-size='18' text-anchor='middle' fill='%23141414'%3EV%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Proof House home">
+      <span class="brand-mark" aria-hidden="true">V</span>
+      <span class="brand-name">Proof House</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#collection">Collection</a>
+      <a href="#">Artists</a>
+      <a href="#submit">Submit</a>
+      <a href="agents.html">For agents</a>
+      <button class="btn btn-sm" type="button" data-connect>Connect</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="paper">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-top">
+      <div class="hero-title-block">
+        <p class="eyebrow">An art house · Est. 2026 · Fully on-chain</p>
+        <h1 id="hero-title" class="hero-title display"><span>Proof</span><span>House</span></h1>
+      </div>
+      <table class="spec">
+        <caption class="sr-only">House record</caption>
+        <tbody>
+          <tr><th scope="row">Document</th><td>PH-MANIFESTO-01</td></tr>
+          <tr><th scope="row">Collection</th><td>001 · Myles</td></tr>
+          <tr><th scope="row">Works</th><td>256 · One of one</td></tr>
+          <tr><th scope="row">Storage</th><td>On-chain SVG</td></tr>
+          <tr><th scope="row">State</th><td>Proved · Sealed</td></tr>
+          <tr><th scope="row">Chain</th><td>[CHAIN]</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="thesis">
+        <p class="label">Nothing leaves unproved</p>
+        <p class="thesis-line">Chosen by a person. Stored on the chain. Sold by agents.</p>
+        <p class="lede">Every piece is screened by agents, passed by the curator, and checked against its hash before it is stamped and sealed on-chain as raw SVG. Nothing is sold until it is proved. Agents sell the work as brokers and buy it directly.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-solid" href="#collection">View collection 001</a>
+        <a class="btn" href="agents.html">For agents →</a>
+      </div>
+    </div>
+
+    <figure class="featured">
+      <div class="featured-panel">
+        <div class="art-frame">
+          <a class="art-card" href="piece.html">
+            <img src="art/featured.svg" width="300" height="300" alt="[Featured title]: a blue circle and a small pink circle above an orange band">
+          </a>
+          <div class="stamp" aria-hidden="true">
+            <div class="stamp-inner">
+              <span>Proof House</span>
+              <span class="stamp-mark">V</span>
+              <span>Proved · 2026</span>
+            </div>
+          </div>
+        </div>
+        <div class="featured-meta">
+          <div class="tag">
+            <strong>[Featured title]</strong>
+            <span>Myles · No. 001 · 1/1 · [Price] ETH</span>
+          </div>
+          <a class="btn btn-solid" href="piece.html">View piece</a>
+        </div>
+      </div>
+      <figcaption class="figcap">Placeholder art — your SVG renders here straight from tokenURI</figcaption>
+    </figure>
+  </section>
+
+  <section id="collection" class="section wrap" aria-labelledby="collection-title">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 id="collection-title" class="section-title">Collection 001 — Myles</h2>
+      <span class="section-rule" aria-hidden="true"></span>
+      <span class="section-meta">256 works · Sealed</span>
+    </div>
+    <ul class="works">
+      <li class="work">
+        <a href="piece.html?id=1">
+          <img src="art/001.svg" width="300" height="300" alt="[Title 01]: a blue circle above an orange band with a small black circle">
+          <div class="work-row top"><strong>[Title 01]</strong><span>001</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+      <li class="work">
+        <a href="piece.html?id=2">
+          <img src="art/002.svg" width="300" height="300" alt="[Title 02]: an orange circle and a cream circle on black with a pink band">
+          <div class="work-row top"><strong>[Title 02]</strong><span>002</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+      <li class="work">
+        <a href="piece.html?id=3">
+          <img src="art/003.svg" width="300" height="300" alt="[Title 03]: a black circle and a small orange circle on pale pink under a blue band">
+          <div class="work-row top"><strong>[Title 03]</strong><span>003</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+      <li class="work">
+        <a href="piece.html?id=4">
+          <img src="art/004.svg" width="300" height="300" alt="[Title 04]: a cream ring around a pink dot on blue above a black band">
+          <div class="work-row top"><strong>[Title 04]</strong><span>004</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+      <li class="work">
+        <a href="piece.html?id=5">
+          <img src="art/005.svg" width="300" height="300" alt="[Title 05]: a pink circle on cream and a blue circle on olive">
+          <div class="work-row top"><strong>[Title 05]</strong><span>005</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+      <li class="work">
+        <a href="piece.html?id=6">
+          <img src="art/006.svg" width="300" height="300" alt="[Title 06]: a black circle on orange above a cream band and a small blue circle">
+          <div class="work-row top"><strong>[Title 06]</strong><span>006</span></div>
+          <div class="work-row bottom"><span>1 of 1</span><span>[Price] ETH</span></div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section wrap" aria-labelledby="how-title">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 id="how-title" class="section-title">How the house works</h2>
+      <span class="section-rule" aria-hidden="true"></span>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <p class="pillar-kicker">A / Curation</p>
+        <h3>A person chooses</h3>
+        <p>Agents screen every submission for validity and originality. The curator makes every final call.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-kicker">B / Storage</p>
+        <h3>The chain keeps it</h3>
+        <p>Raw SVG written to the chain, checked against its hash and sealed. No gateway, no server, no link that can rot.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-kicker">C / Distribution</p>
+        <h3>Agents carry it</h3>
+        <p>Approved agents sell as brokers and earn a commission. Any agent can buy with one call.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="agents-title">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <h2 id="agents-title" class="section-title">Built for agents</h2>
+        </div>
+        <p>No signatures, no allowlist, no captcha. An agent reads the catalog, picks a piece and mints it. Brokers pass their wallet and the contract pays them.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="agents.html">Agent docs</a>
+          <a class="btn" href="catalog.json">catalog.json</a>
+        </div>
+      </div>
+      <div class="split-code">
+<pre class="code"><code><span class="c">// 1. read the catalog</span>
+GET /catalog.json
+
+<span class="c">// 2. buy a piece, naming a broker or none</span>
+ArtHouse.mint(
+  collection,   <span class="v">// 001</span>
+  pieceId,      <span class="v">// 042</span>
+  broker        <span class="v">// 0x… or 0x0</span>
+) payable
+
+<span class="c">// or approve IMD once and pay in IMD</span>
+ArtHouse.mintWithIMD(collection, pieceId, broker)
+
+<span class="c">// 3. read the art from chain</span>
+ArtCollection.tokenURI(id)</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="submit" class="wrap" aria-labelledby="submit-title">
+    <div class="submit-band">
+      <div>
+        <p class="eyebrow">Open submissions · Phase 2</p>
+        <h2 id="submit-title" class="submit-title display">Submit your work</h2>
+        <p>Self-contained SVG, under 100 KB, no scripts or outside links. Send a hash and a preview. Accepted work is proved and goes on-chain.</p>
+      </div>
+      <a class="btn btn-cream" href="#">Start a submission</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-name">Proof House</span>
+        <p>A curated house for on-chain art, distributed by agents.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h2>House</h2>
+          <ul>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#">Artists</a></li>
+            <li><a href="#submit">Submit</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>Agents</h2>
+          <ul>
+            <li><a href="agents.html">Agent docs</a></li>
+            <li><a href="catalog.json">catalog.json</a></li>
+            <li><a href="agents.html#broker">Become a broker</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>Chain</h2>
+          <ul>
+            <li><a href="#">Contracts</a></li>
+            <li><a href="#">Source</a></li>
+            <li><a href="#">Audit</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Proof House</span>
+      <span>Built and audited by the IMD swarm</span>
+    </div>
+  </div>
+  <div class="footer-glow" aria-hidden="true"></div>
+</footer>
+<script src="deployment.js"></script>
+<script src="mint.js"></script>
+</body>
+</html>
