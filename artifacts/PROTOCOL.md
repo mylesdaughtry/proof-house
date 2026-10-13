@@ -4,6 +4,8 @@ The decisions this design follows (Oct 13, 2026):
 - 256 piece contracts
 - Self-custodial key re-wrap
 - Fixed price with VRF assignment for the editions; THE SOURCE in its own single-lot auction
+- Edition price set by the curator: the sale starts closed, and the price can change only while it is closed
+- A 7.5% ERC-2981 royalty to the artist on every piece
 - ETH only
 - The art follows `RULES.md` (R0–R13) exactly
 
@@ -22,16 +24,16 @@ Owners may do anything with their piece. The security goal is non-owners only.
 
 **ArtifactsFactory**
 - Before the sale it publishes all 256 ciphertexts and commitments, so no piece can be swapped after assignment.
-- It sells editions at one ETH price through the Proof House ledger, with the 15/15/70 split and broker commissions.
+- It sells editions at one ETH price that the curator sets, through the Proof House ledger, with the 15/15/70 split and broker commissions. The sale starts closed; the curator sets the price (above zero) and opens it, and can change the price only while it is closed.
 - Chainlink VRF assigns each buyer a random unassigned edition.
 - At claim it deploys the buyer's piece clone.
 - It runs keyed escrow for secondary sales.
-- THE SOURCE is sold in its own single-lot auction, in ETH, through the same ledger.
+- THE SOURCE is sold in its own single-lot ETH auction through the same ledger: the curator sets the reserve and end time; each bid must beat the high bid by at least 5%; a bid in the final 10 minutes moves the end to 10 minutes after it; outbid bids are refunded by pull.
 
 **ArtifactsRenderer**
 - An on-chain port of `RULES.md`. It must reproduce the 11 pieces in `reference/framed/` byte for byte, as `reference/check-framed.js` proves for the JavaScript reference.
 - `renderSeal` draws the seal for any piece: the frame and its public traits, with no dots.
-- `renderSource(timestamp)` draws THE SOURCE (R9 has no seed) with R10's animation and R11's evolution, once revealed.
+- THE SOURCE is not recomputed on-chain. Before the sale the curator stores its finished SVG on-chain with SSTORE2, pixel-identical to framed-MASTER.svg but written with single-quoted attributes and no "#" colours, so `tokenURI` can return it inside JSON with no re-encoding, plus R10's SMIL shimmer, in under 10M gas. R11's year-long evolution runs in the viewer from block time.
 - Editions are never rendered on-chain (R13): owners render them in their browser with the JavaScript port, so a seed never goes to an RPC provider.
 
 ## Keys
@@ -62,7 +64,7 @@ Payment releases when the buyer confirms, or after 72 hours. The buyer can cance
 
 **Plain transfers.** Ordinary ERC-721 transfers stay allowed. The new owner sees only the seal until the previous owner calls `rewrapFor`.
 
-**THE SOURCE.** Under R9 it has no seed: its image is fixed by the rules. Its owner can set its write-once `revealed` flag, once and irreversibly; from then on `tokenURI` returns `renderSource`, evolving with `block.timestamp` (R11).
+**THE SOURCE.** Under R9 it has no seed: its image is fixed by the rules. Its owner can set its write-once `revealed` flag, once and irreversibly. Until then its `tokenURI` shows the seal; from then on it returns the stored image with R10's shimmer, and the viewer shows R11's evolution.
 
 ## Disclose to buyers (consequences of the rules as written)
 - **R9:** THE SOURCE's image is fixed by the public algorithm, so anyone running the rules can draw it before it is revealed. Revealing makes it official and puts it on-chain.
