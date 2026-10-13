@@ -12,6 +12,7 @@ This repository is the reference material for building it. It holds no productio
 | `artifacts/reference/rules.js` | The reference renderer, written strictly from the rules. |
 | `artifacts/reference/check-framed.js` | The acceptance test: rebuilds each piece in `framed/` from the rules and compares the files byte for byte. |
 | `artifacts/reference/framed/` | 11 framed pieces: demo seeds 003–236 and THE SOURCE. The test targets. |
+| `artifacts/reference/the-source.payload.b64` | THE SOURCE's on-chain metadata: base64 JSON whose image is `framed-MASTER.svg` byte for byte. Its revealed `tokenURI` is `data:application/json;base64,` plus this file. |
 | `artifacts/PROTOCOL.md` | How ARTIFACTS works on Proof House: the contracts, keys, sale, claim, resale and reveal. |
 | `artifacts/SEED-SECURITY-SPEC.md` | The original security spec. Where it differs from `PROTOCOL.md` (viewing keys, transfer), `PROTOCOL.md` wins. |
 | `site/` | The Proof House site prototype: home, piece and agents pages, with wallet minting. |

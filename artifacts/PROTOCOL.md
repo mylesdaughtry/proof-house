@@ -33,7 +33,7 @@ Owners may do anything with their piece. The security goal is non-owners only.
 **ArtifactsRenderer**
 - An on-chain port of `RULES.md`. It must reproduce the 11 pieces in `reference/framed/` byte for byte, as `reference/check-framed.js` proves for the JavaScript reference.
 - `renderSeal` draws the seal for any piece: the frame and its public traits, with no dots.
-- THE SOURCE is not recomputed on-chain. Before the sale the curator stores its finished SVG on-chain with SSTORE2, pixel-identical to framed-MASTER.svg but written with single-quoted attributes and no "#" colours, so `tokenURI` can return it inside JSON with no re-encoding, plus R10's SMIL shimmer, in under 10M gas. R11's year-long evolution runs in the viewer from block time.
+- THE SOURCE is not recomputed on-chain. Before its auction opens the curator stores its finished metadata with SSTORE2 and locks it forever: `reference/the-source.payload.b64`, base64 JSON whose image is framed-MASTER.svg byte for byte. Once revealed, `tokenURI` returns `data:application/json;base64,` plus those bytes, copied as is, in about 7M gas. It does not animate: R10's shimmer and R11's drift would change the colours of the approved art.
 - Editions are never rendered on-chain (R13): owners render them in their browser with the JavaScript port, so a seed never goes to an RPC provider.
 
 ## Keys
@@ -64,7 +64,7 @@ Payment releases when the buyer confirms, or after 72 hours. The buyer can cance
 
 **Plain transfers.** Ordinary ERC-721 transfers stay allowed. The new owner sees only the seal until the previous owner calls `rewrapFor`.
 
-**THE SOURCE.** Under R9 it has no seed: its image is fixed by the rules. Its owner can set its write-once `revealed` flag, once and irreversibly. Until then its `tokenURI` shows the seal; from then on it returns the stored image with R10's shimmer, and the viewer shows R11's evolution.
+**THE SOURCE.** Under R9 it has no seed: its image is fixed by the rules. Its owner can set its write-once `revealed` flag, once and irreversibly. Until then its `tokenURI` shows the seal; from then on it returns the stored image: framed-MASTER.svg exactly as approved.
 
 ## Disclose to buyers (consequences of the rules as written)
 - **R9:** THE SOURCE's image is fixed by the public algorithm, so anyone running the rules can draw it before it is revealed. Revealing makes it official and puts it on-chain.
