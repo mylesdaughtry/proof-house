@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARTIFACTS · docs</title>
+  <meta name="description" content="How ARTIFACTS works: buying and selling through each piece's own contract, viewing keys, THE SOURCE, fees, and the technical truth.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f2ec'/%3E%3Ctext x='16' y='23' font-family='monospace' font-weight='700' font-size='20' text-anchor='middle' fill='%2316160f'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=8b38d74747">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html"><span class="br">[</span>Artifacts<span class="br">]</span>✶</a>
+      <nav aria-label="Main"><a href="index.html">Marketplace</a><span class="d">·</span><a href="explore.html">Explore</a><span class="d">··</span><a href="about.html">About</a><span class="d">·</span><a href="docs.html" aria-current="page">Docs</a><span class="d">··</span><button type="button" data-connect>Connect</button></nav>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <main id="main">
+    <p class="eyebrow">// Docs</p>
+    <h1 class="h2">How ARTIFACTS works</h1>
+    <div class="docs">
+      <aside class="toc" aria-label="Contents">
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#buy">Buying</a></li>
+          <li><a href="#sell">Selling</a></li>
+          <li><a href="#fees">Fees</a></li>
+          <li><a href="#keys">Viewing keys</a></li>
+          <li><a href="#source">THE SOURCE</a></li>
+          <li><a href="#contracts-each">Each piece, its own contract</a></li>
+          <li><a href="#truth">The technical truth</a></li>
+          <li><a href="#addresses">Contracts</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ol>
+      </aside>
+
+      <article>
+        <section id="overview">
+          <h2>How ARTIFACTS works</h2>
+          <p class="lede">256 pieces by Myles Daughtry. Each seed is sealed on-chain; only the wallet that holds a piece can open it and draw it. Everything here is done by the pieces' own contracts on Ethereum: no accounts, no custody, every sale and key on-chain where anyone can check it.</p>
+          <p class="lede">The primary sale ran on <a data-house href="#">Proof House</a>: THE SOURCE by auction, then 255 editions drawn at random by Chainlink VRF. Resale happens here, owner to owner.</p>
+        </section>
+
+        <section id="buy">
+          <h3>Buying</h3>
+          <ol class="list">
+            <li><b>Buy.</b> Pay the listed price into the piece's own escrow. Your wallet signs to make a viewing key for this piece alone (not a transaction; the first time, twice, to check it signs the same way), and its public half goes in with the payment.</li>
+            <li><b>Wait for the key.</b> The seller has 24 hours from your payment to send the piece's key, wrapped to your viewing key, or to refund you. If no key has come after 24 hours, you can cancel and take your ETH back.</li>
+            <li><b>Confirm.</b> Your browser checks the key opens the piece (it matches the commitment locked on-chain when the piece was made), then you release the payment and the piece is yours, with its key.</li>
+          </ol>
+          <p class="lede">You have 72 hours from when the key arrives to check it. If you don't confirm, anyone can release the payment after that. While your payment is in escrow, the seller can't move the piece (or, for THE SOURCE, reveal it).</p>
+          <p class="lede"><b>If the key doesn't open the piece</b>, your browser says so and proves it on-chain with one click: the contract checks the proof, and your payment plus the seller's 10% deposit come back to you. The seller keeps the piece. A key that opens can never be proven fake, so this can't be used against an honest seller. Prove it within the 72 hours: after that anyone can release the payment.</p>
+        </section>
+
+        <section id="sell">
+          <h3>Selling</h3>
+          <ol class="list">
+            <li><b>List</b> your piece at a price in ETH from the Marketplace. You can take it off the marketplace any time until someone pays.</li>
+            <li>When a buyer pays, <b>send them the key</b>: your browser opens the key you hold, re-wraps it to their viewing key and sends it with your deposit and a proof that you made this wrapped key. It never leaves your browser unwrapped. You have 24 hours from their payment; after that the buyer may cancel.</li>
+            <li>When they confirm (or 72 hours after the key arrives), <b>withdraw</b> your proceeds from the piece's contract.</li>
+          </ol>
+          <p class="lede">When you send the key you lock a deposit of 10% of the price; it comes back with your payment. The Marketplace always sends the real key, checked against the piece first, so an honest seller never loses it: only a key that doesn't open can be proven fake. Until you send the key you can refund the buyer instead (you keep the piece and can list it again).</p>
+          <p class="lede"><b>Send the key well before the 24 hours are up.</b> A key waiting in a pending transaction can be read by anyone. For the first 24 hours only you can end the sale, so the buyer can't read it and cancel ahead of it; after that they could, and the piece's contract no longer takes a key at all. The Marketplace warns you in the last 2 hours and stops sending keys in the last hour, offering the refund instead: you keep the piece and can list it again.</p>
+          <p class="lede">You can only sell through escrow while you hold the piece's key. It arrives from the curator when you first claim an edition, or from the previous owner after a sale. A plain transfer (outside escrow: a gift, or a sale elsewhere) drops any listing and clears the key. The new owner registers a key on the piece under Yours here, and the previous owner sends the key to it from their own Yours list (their browser finds the key they held in the chain's history). If they never do, the curator can send it while the curator still holds the keys.</p>
+        </section>
+
+        <section id="fees">
+          <h3>Fees</h3>
+          <table>
+            <thead><tr><th scope="col">On every resale</th><th scope="col">Share</th></tr></thead>
+            <tbody>
+              <tr><td>Seller</td><td>90%</td></tr>
+              <tr><td>Artist royalty (Myles Daughtry)</td><td>7.5%</td></tr>
+              <tr><td>The agent who brought the buyer (a Proof House broker, which may be the buyer themselves; never the seller)</td><td>2.5%, or to the seller if none</td></tr>
+            </tbody>
+          </table>
+          <p class="lede">The contract pays these at release. No fee goes to this site. The royalty is also published as ERC-2981 for marketplaces that honour it.</p>
+        </section>
+
+        <section id="keys">
+          <h3>Viewing keys</h3>
+          <p class="lede">A viewing key is a key pair your browser makes from one wallet signature over a fixed message that names the network. Its public half goes on-chain so keys can be sent to you; the private half is remade from the same signature whenever you need it, and never leaves the page. It needs an ordinary wallet account that signs the same way every time: before your first purchase the page asks for the signature twice and checks they match.</p>
+          <p class="lede">When you buy here, the same signature makes a viewing key for that one piece, and the payment registers it. Proving a fake key reveals only what opens that one wrapped key, so a key used for one piece alone exposes nothing else.</p>
+          <p class="lede"><b>Treat that signature like a password:</b> only sign it on this site or Proof House. Anyone holding it could open your pieces.</p>
+        </section>
+
+        <section id="source">
+          <h3>THE SOURCE</h3>
+          <p class="lede">The master. Its composition is public (the full prism, its drift, its frame); its exact dot field comes from a secret seed. The chain stores that seed sealed, beside the rules that draw it, never the image. Its owner can view it privately from the Marketplace, and holds one irreversible choice: publish its key, and from then on its token draws it for everyone, forever, byte for byte in any browser. Marketplaces show it on the piece's own page; their grids keep the seal. It can't be revealed while a buyer's payment sits in escrow: they paid for it sealed.</p>
+        </section>
+
+        <section id="contracts-each">
+          <h3>Each piece, its own contract</h3>
+          <p class="lede">Technically, every piece is its own smart contract. Each edition's seed was published before the sale as a contract of its own (the sealed bytes are that contract's code). When an edition is claimed, its own ERC-721 contract is deployed: one token, its sealed seed, its wrapped key, its keyed escrow and its royalty. THE SOURCE gets a full contract of its own when its auction closes. That is why a resale here talks to the piece itself, and nothing is pooled.</p>
+        </section>
+
+        <section id="truth">
+          <h3>The technical truth</h3>
+          <ul class="list">
+            <li><b>Editions:</b> each seed is encrypted with its own random 256-bit key (AES-256-GCM). The key is never on-chain in the clear, only wrapped to the owner's viewing key.</li>
+            <li><b>THE SOURCE:</b> its seed is stored as seed XOR keccak256(K ‖ 0), locked with keccak256(K) before the auction. Revealing publishes K; the contract checks it.</li>
+            <li><b>Public by design:</b> every piece's title, palette, colour count and direction; the rules; the study of THE SOURCE.</li>
+            <li><b>Look-alikes:</b> anyone can draw pieces that share an edition's public traits, but nothing on-chain tells them which, if any, is real.</li>
+            <li><b>Who else can see:</b> the curator holds each edition's key until it is first claimed, then deletes it. The artist made THE SOURCE.</li>
+            <li><b>A fake key can be proven:</b> keys are on secp256k1, Ethereum's own curve, so a contract can check them. A seller could send a key that doesn't open; your browser checks before you release, and if it fails it proves that on-chain (a Chaum-Pedersen proof that reveals only what opens that one wrapped key). The seller also proves they made the wrapped key they send, so nobody can post one built from someone else's.</li>
+            <li><b>Same bytes everywhere:</b> the rules compute sine and arc tangent exactly, so every browser draws identical pieces.</li>
+          </ul>
+        </section>
+
+        <section id="addresses">
+          <h3>Contracts</h3>
+          <div data-addresses></div>
+          <p class="note">Each claimed piece's own contract is shown on its card in Explore and the Marketplace.</p>
+        </section>
+
+        <section id="faq">
+          <h3>Questions</h3>
+          <dl>
+            <dt>Can I sell on another marketplace?</dt>
+            <dd>You can transfer your piece anywhere, but only the escrow here guarantees the buyer receives the key, and the artist the royalty. Without the key, a buyer gets the seal only.</dd>
+            <dt>The seller never sent the key.</dt>
+            <dd>The seller has 24 hours from your payment to send it or refund you. After that, while no key has been sent, cancel from the Marketplace and withdraw your ETH.</dd>
+            <dt>The key didn't check out.</dt>
+            <dd>Don't release. On the Marketplace, <b>Check the key and confirm</b> proves it on-chain when the key doesn't open: your payment and the seller's 10% deposit come back to you to withdraw, and the seller keeps the piece. Do it within 72 hours of the key arriving, before anyone can release the payment.</dd>
+            <dt>Can anyone see my piece?</dt>
+            <dd>Not unless you show them. What you do with your own piece is up to you.</dd>
+          </dl>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <span>All·rights·reserved·✶·ARTIFACTS·2026<span class="d"> · </span>by Myles Daughtry</span>
+    <span>Public·proof<span class="d">·</span><wbr>private·art<span class="d">·</span><wbr>one·irreversible·window</span>
+  </footer>
+</div>
+<script src="config.js?v=bbb209eea8"></script>
+<script src="wallet.js?v=ca231e4783"></script>
+<script>
+  (function () {
+    const W = window.ProofHouseWallet;
+    if (!W) return;
+    document.querySelectorAll('[data-house]').forEach((a) => { a.href = W.cfg.houseUrl || '#'; });
+    const c = (((W.cfg.drops || {}).artifacts || {}).contracts) || {};
+    const box = document.querySelector('[data-addresses]');
+    [['ArtifactsFactory · the 255 editions, their sealed seeds, claims', c.factory], ['ArtifactsSource · THE SOURCE: sealed seed, renderer, auction', c.source],
+     ['ArtifactsPiece · the template every piece contract copies', c.piece], ['ArtHouse · the ledger that pays the royalty', c.artHouse]]
+      .filter(([, a]) => W.ADDR.test(a || ''))
+      .forEach(([name, a]) => {
+        const row = document.createElement('div'); row.className = 'kv';
+        const k = document.createElement('span'); k.className = 'k'; k.textContent = `${name} · ${W.cfg.chainName}`;
+        const v = document.createElement('span'); v.className = 'v';
+        const href = W.explorer('address', a);
+        const link = document.createElement(href ? 'a' : 'span');
+        if (href) { link.href = href; link.target = '_blank'; link.rel = 'noopener'; }
+        link.textContent = W.short(a); link.title = a;
+        v.append(link); row.append(k, v); box.append(row);
+      });
+  })();
+</script>
+</body>
+</html>

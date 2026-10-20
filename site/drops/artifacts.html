@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artifacts by Myles Daughtry · Drop 001 · Proof House</title>
+  <meta name="description" content="Drop 001 at Proof House: Artifacts by Myles Daughtry. 255 encrypted editions drawn at random, and THE SOURCE.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='21.5' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='14' text-anchor='middle' fill='%23ECEADF'%3EPH%3C/text%3E%3C/svg%3E">
+  <link rel="alternate" type="application/json" href="../drops.json" title="Proof House drops feed for agents">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=147b43501a">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Proof House home">
+      <span class="brand-mark" aria-hidden="true">PH</span>
+      <span class="brand-name">Proof House</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#mint" aria-current="page">Mint</a>
+      <a href="https://artifacts.proofhouse.fun/" data-market-link>Marketplace</a>
+      <a href="../submit.html">Artists</a>
+      <a href="../review.html">Review</a>
+      <a href="../agents.html">For agents</a>
+      <a href="../docs.html">Docs</a>
+      <button class="btn btn-sm" type="button" data-connect>Connect</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="paper">
+  <article class="drop wrap" data-drop-page data-drop="artifacts" aria-labelledby="drop-title">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html#drops">Drops</a> <span>/ 001 · Artifacts</span></nav>
+
+    <!-- 1. the drop -->
+    <header class="drop-head">
+      <p class="kicker">Drop 001 · by Myles Daughtry · <span data-drop-status>…</span></p>
+      <h1 id="drop-title" class="drop-title display">Artifacts</h1>
+    </header>
+    <section class="drop-hero" aria-label="The drop">
+      <div class="drop-intro">
+        <p class="thesis-line">The value is in the idea, not the output.</p>
+        <p class="lede">256 spectrums from one algorithm, each encrypted on-chain and opened only by the wallet that holds it. The drop runs in two parts: first THE SOURCE, the master, goes to auction. Then the 255 editions open, each drawn at random for whoever mints.</p>
+
+        <ol class="phases">
+          <li class="phase" data-phase="auction">
+            <div class="box-head"><span>1 · THE SOURCE · auction</span><span class="live" data-auction-state>Opens soon</span></div>
+            <div class="box-body">
+              <dl class="facts">
+                <div><dt data-high-label>Reserve</dt><dd><strong data-src-high>…</strong></dd></div>
+                <div><dt data-countdown-label>Opens</dt><dd data-countdown>…</dd></div>
+                <div><dt>Bids</dt><dd data-bid-count>0</dd></div>
+                <div><dt>Rules</dt><dd>+5% per bid · a late bid adds 10 min</dd></div>
+              </dl>
+              <form class="bid-row" data-bid-form hidden novalidate data-ro-hide>
+                <input class="handover-input" inputmode="decimal" autocomplete="off" spellcheck="false" aria-label="Your bid in ETH" data-bid-input>
+                <button class="btn btn-solid btn-sm" type="submit" data-bid-btn>Bid</button>
+              </form>
+              <p class="mint-note" data-bid-hint data-ro-hide></p>
+              <p class="mint-note gate-note" data-src-gate hidden data-ro-hide></p>
+              <div class="actions phase-actions" data-src-actions data-ro-hide></div>
+              <p class="mint-message" role="status" aria-live="polite" data-src-msg></p>
+            </div>
+            <p class="phase-summary" data-auction-summary></p>
+            <div class="phase-next" data-auction-next hidden data-ro-hide></div>
+          </li>
+
+          <li class="phase" data-phase="editions" id="mint">
+            <div class="box-head"><span>2 · 255 editions</span><span class="live" data-sale-state>After the auction</span></div>
+            <div class="box-body">
+              <dl class="facts">
+                <div><dt>Price</dt><dd><strong data-price>…</strong></dd></div>
+                <div><dt>Remaining</dt><dd data-remaining>… / 255</dd></div>
+                <div data-next-row hidden><dt data-next-label>Next</dt><dd><strong data-next>…</strong></dd></div>
+                <div data-limit-row hidden><dt>Per wallet</dt><dd data-limit>5</dd></div>
+                <div><dt>Each edition</dt><dd>Drawn at random · Chainlink VRF</dd></div>
+                <div><dt>Network</dt><dd data-network>…</dd></div>
+              </dl>
+              <div class="sched" data-sched hidden>
+                <p class="sched-head">Mint phases</p>
+                <ol class="sched-list" data-sched-list></ol>
+                <p class="sched-note" data-sched-note></p>
+              </div>
+              <div class="qty" data-qty hidden data-ro-hide>
+                <span class="qty-label" id="qty-label">How many</span>
+                <div class="qty-opts" role="group" aria-labelledby="qty-label" data-qty-opts>
+                  <button type="button" data-q="1" aria-pressed="true">1</button>
+                  <button type="button" data-q="2" aria-pressed="false">2</button>
+                  <button type="button" data-q="3" aria-pressed="false">3</button>
+                  <button type="button" data-q="4" aria-pressed="false">4</button>
+                  <button type="button" data-q="5" aria-pressed="false">5</button>
+                </div>
+              </div>
+              <label class="seat-row" data-seat-row hidden data-ro-hide>Your identity.md seat<input class="handover-input" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Seat number, e.g. 986" data-seat-input></label>
+              <button class="btn btn-solid mint-btn" type="button" data-mint disabled data-ro-note="Minting is off while the site is read-only.">Sale not open yet</button>
+              <p class="mint-note gate-note" data-gate-note hidden data-ro-hide></p>
+              <div class="flow compact" data-ro-hide>
+                <p class="flow-head">After you mint</p>
+                <ol class="flow-list">
+                <li data-flow-step="drawn"><span class="flow-n">1</span><span class="flow-t">Drawn<span class="flow-c" data-flow-count></span></span><span class="flow-s">Chainlink picks your edition at random, in about a minute.</span></li>
+                <li data-flow-step="key"><span class="flow-n">2</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch: the first at sell-out or 24 hours after the editions open, then daily. <a href="../docs.html#keys">When?</a></span></li>
+                <li data-flow-step="view"><span class="flow-n">3</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
+                </ol>
+              </div>
+              <p class="mint-note" data-vk-note hidden data-ro-hide>First mint from this wallet: you also sign once (free) to make your viewing key, then confirm one small transaction to register it. That puts you in the next key batch.</p>
+              <ol class="ready" data-ready aria-label="Before the sale opens">
+                <li data-step="pieces">All 255 pieces published <span data-pieces-count></span></li>
+                <li data-step="locked">Pieces locked forever</li>
+                <li data-step="vrf">Chainlink VRF connected</li>
+                <li data-step="price">Price set</li>
+                <li data-step="open">Sale opened by the curator</li>
+              </ol>
+              <p class="mint-message" role="status" aria-live="polite" data-msg></p>
+              <div class="broker-note" data-broker hidden data-ro-hide><p>Arrived through an agent</p><p>Broker <strong data-broker-addr>0x…</strong> earns 15% of this sale, paid by the contract.</p></div>
+            </div>
+            <p class="phase-summary" data-edition-summary>Opens once THE SOURCE's auction has closed.</p>
+          </li>
+        </ol>
+      </div>
+
+      <figure class="drop-art">
+        <div data-hero-card></div>
+        <figcaption class="piece-caption" data-hero-caption><span>The public sees the seal</span><span aria-hidden="true">·</span><span>The owner sees the art</span></figcaption>
+      </figure>
+    </section>
+
+    <!-- yours -->
+    <section class="section" id="yours" data-yours hidden aria-labelledby="yours-title">
+      <div class="section-head">
+        <span class="section-num">Wallet</span>
+        <h2 id="yours-title" class="section-title">Yours</h2>
+        <span class="section-meta"><span data-yours-addr></span> · <span data-yours-count></span></span>
+      </div>
+      <ol class="flow-list flow-live" data-flow aria-label="How your editions open">
+                <li data-flow-step="drawn"><span class="flow-n">1</span><span class="flow-t">Drawn<span class="flow-c" data-flow-count></span></span><span class="flow-s">Chainlink picks your edition at random, in about a minute.</span></li>
+                <li data-flow-step="key"><span class="flow-n">2</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch: the first at sell-out or 24 hours after the editions open, then daily. <a href="../docs.html#keys">When?</a></span></li>
+                <li data-flow-step="view"><span class="flow-n">3</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
+      </ol>
+      <div class="claim-all" data-claim-all hidden data-ro-hide>
+        <button class="btn btn-solid btn-sm" type="button" data-claim-all-btn>Claim all</button>
+        <p class="hold-note" data-claim-all-note></p>
+      </div>
+      <div class="holds" data-holds></div>
+      <p class="mint-note yours-review" data-yours-review hidden data-ro-hide>Each edition you've claimed is a voice on what Proof House drops next. <a href="../review.html">Review submissions →</a></p>
+      <p class="mint-message" role="status" aria-live="polite" data-yours-msg></p>
+      <dialog class="piece-panel ed-viewer" data-ed-viewer aria-labelledby="ev-title">
+        <div class="pp-head"><span id="ev-title" data-ev-title>ARTIFACTS · private view</span><span class="caption-acts"><button class="btn btn-sm" type="button" data-ev-png="clear" hidden>Transparent PNG</button><button class="btn btn-sm" type="button" data-ev-png="white" hidden>White PNG</button><button class="pp-close" type="button" data-ev-close aria-label="Close">✕</button></span></div>
+        <div class="ev-body"><p class="art-drawing" data-ev-drawing>Drawing in this browser…</p><img data-ev-img alt="" hidden></div>
+        <p class="ev-note">Drawn from its seed in this browser, sent nowhere · gone when you close it</p>
+      </dialog>
+      <p class="mint-note market-note">Resell, or buy from other owners, on the <a data-market-link href="#" target="_blank" rel="noopener">Artifacts marketplace ↗</a>: owner to owner, through each piece's own contract.</p>
+    </section>
+
+    <!-- 2. the idea: the artist's thesis -->
+    <section id="idea" class="section" aria-labelledby="idea-title">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 id="idea-title" class="section-title">The idea</h2>
+      </div>
+      <div class="idea">
+        <figure class="idea-quote">
+          <blockquote><p>In a world where everyone has access, where people feel entitled to information, Artifacts represents things that maintain privacy. The value is in the idea and not the output.</p></blockquote>
+          <figcaption>Myles Daughtry</figcaption>
+        </figure>
+        <div class="idea-body">
+          <p class="lede">So the work is blind by design. Every piece is encrypted on-chain; all anyone else sees is its seal and its public traits. Its owner decides who, if anyone, sees the rest.</p>
+          <p class="lede">Each piece is, technically, its own smart contract. Its seed lives on-chain sealed, in a contract of its own, and the piece itself becomes its own contract, holding its one token, when it is claimed. Nothing is pooled: every work stands alone.</p>
+          <p class="lede">THE SOURCE, the master, is the one piece that can become public, and only if its owner chooses: once, and forever.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. the collection -->
+    <section id="archive" class="section" aria-labelledby="archive-title">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 id="archive-title" class="section-title">The collection</h2>
+        <span class="section-meta">256 · by trait</span>
+      </div>
+      <p class="lede section-lede">Every piece's traits are public: title, palette, colours, direction. The art is sealed and rendered only by the wallet that holds it.</p>
+      <div class="filters">
+        <select data-filter="direction" aria-label="Direction"><option value="">Direction · all</option></select>
+        <select data-filter="palette" aria-label="Palette"><option value="">Palette · all</option></select>
+        <select data-filter="title" aria-label="Title"><option value="">Title · all</option></select>
+        <span class="filter-count" data-filter-count>256 / 256</span>
+      </div>
+      <ol class="archive" data-grid aria-label="The 256 pieces. Use the arrow keys to move between them."></ol>
+      <dialog class="piece-panel" data-piece-panel aria-labelledby="pp-title">
+        <div class="pp-head"><span id="pp-title" data-pp-title>ARTIFACTS</span><button class="pp-close" type="button" data-pp-close aria-label="Close">✕</button></div>
+        <div class="pp-body">
+          <div data-pp-art></div>
+          <div><dl class="facts pp-facts" data-pp-facts></dl><div class="actions pp-acts" data-pp-acts></div></div>
+        </div>
+      </dialog>
+      <p class="mint-note" data-archive-note></p>
+    </section>
+
+    <!-- 3. drop special: THE SOURCE -->
+    <section id="source" class="section" aria-labelledby="source-title">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 id="source-title" class="section-title">THE SOURCE</h2>
+        <span class="section-meta">1 of 1 · auction</span>
+      </div>
+      <div class="source-grid">
+        <div>
+          <p class="lede">The master: the only work that holds every colour and every direction at once, the full prism the editions are fragments of. Its seed is already on-chain, encrypted, beside the rules that draw it, and nobody outside its making has seen it. It is sold first, by auction. Its owner receives its key, and one irreversible power: reveal it to the world forever, or keep the silence.</p>
+          <dl class="facts source-facts">
+            <div><dt>State</dt><dd data-src-state>…</dd></div>
+            <div><dt>On-chain</dt><dd data-src-image>…</dd></div>
+            <div><dt>Owner</dt><dd data-src-owner>…</dd></div>
+          </dl>
+          <p class="mint-note source-note" data-reveal-note></p>
+          <div class="actions source-actions" data-reveal-actions></div>
+          <p class="mint-message" role="status" aria-live="polite" data-reveal-msg></p>
+          <h3 class="bids-title">Bids</h3>
+          <ol class="bids" data-bids><li class="bids-empty">No bids yet.</li></ol>
+        </div>
+        <div class="source-art" data-src-window hidden>
+          <figure class="revealed" data-src-figure hidden>
+            <div class="art-frame-wrap">
+              <img class="art-img" alt="THE SOURCE, drawn from its seed by the rules on-chain" data-src-img hidden>
+              <p class="art-drawing" data-src-drawing>Drawing from its seed…</p>
+            </div>
+            <figcaption class="piece-caption"><span data-src-caption></span><span class="caption-acts"><button class="btn btn-sm" type="button" data-src-png="clear" hidden>Transparent PNG</button><button class="btn btn-sm" type="button" data-src-png="white" hidden>White PNG</button><a class="btn btn-sm" data-src-full download="ARTIFACTS-THE-SOURCE.svg" hidden>Download the SVG</a><button class="btn btn-sm" type="button" data-src-private-close hidden>Close</button></span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. how this drop works -->
+    <section id="how" class="section" aria-labelledby="how-title">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 id="how-title" class="section-title">How this drop works</h2>
+      </div>
+      <div class="pillars pillars-4">
+        <div class="pillar"><p class="pillar-kicker">1 / Auction</p><h3>THE SOURCE first</h3><p>The master is sold first, by a single-lot auction: each bid 5% above the last, a late bid adds 10 minutes, outbid ETH comes back.</p></div>
+        <div class="pillar"><p class="pillar-kicker">2 / Mint</p><h3>Then the editions</h3><p>Pay the edition price. The contract splits it: 75% to the artist, 15% to the agent who sent you, 5% to the team and operations, 5% to buy back and burn IMD. No agent: their 15% is burned too.</p></div>
+        <div class="pillar"><p class="pillar-kicker">3 / Draw + claim</p><h3>Your own contract</h3><p>Chainlink VRF draws your edition at random. Register a viewing key, and claiming deploys your piece's own contract: your one token, your sealed seed, your key, its own resale.</p></div>
+        <div class="pillar"><p class="pillar-kicker">4 / View</p><h3>Yours to show, or not</h3><p>Your wallet unwraps the key and renders the art locally, on your screen alone. Whether anyone else sees it is your choice. Resale runs through each piece's keyed escrow, with 7.5% to the artist.</p></div>
+      </div>
+    </section>
+
+    <!-- 5. proof -->
+    <section id="proof" class="section" aria-labelledby="proof-title">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 id="proof-title" class="section-title">Proof</h2>
+        <span class="section-meta">Built and audited by the IMD swarm</span>
+      </div>
+      <dl class="facts proof-facts" data-proof></dl>
+    </section>
+  </article>
+</main>
+
+<footer class="footer-bar">
+  <div class="wrap">
+    <span>© 2026 Proof House · Drop 001 · Artifacts by Myles Daughtry</span>
+    <span><a href="../review.html">Review submissions</a> · Built and audited by the IMD swarm</span>
+  </div>
+</footer>
+<script src="../deployment.js?v=133224b849"></script>
+<script src="../mint.js?v=ca231e4783"></script>
+<script src="../sealcrypto.js?v=28f1fd9806"></script>
+<script src="../palettes.js?v=6c02bf3a04"></script>
+<script src="../drop.js?v=b90a2f945b"></script>
+</body>
+</html>

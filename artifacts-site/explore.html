@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARTIFACTS · explore</title>
+  <meta name="description" content="All 256 ARTIFACTS by trait: public traits, sealed art, each piece its own contract.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f2ec'/%3E%3Ctext x='16' y='23' font-family='monospace' font-weight='700' font-size='20' text-anchor='middle' fill='%2316160f'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=8b38d74747">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html"><span class="br">[</span>Artifacts<span class="br">]</span>✶</a>
+      <nav aria-label="Main"><a href="index.html">Marketplace</a><span class="d">·</span><a href="explore.html" aria-current="page">Explore</a><span class="d">··</span><a href="about.html">About</a><span class="d">·</span><a href="docs.html">Docs</a><span class="d">··</span><button type="button" data-connect>Connect</button></nav>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <main id="main" data-explore>
+    <section class="section">
+      <p class="eyebrow">// Explore · the archive</p>
+      <h1 class="h2">All 256, by trait.</h1>
+      <p class="lede">Every piece's <b>traits are public</b>: title, palette, colours, direction. The art is sealed and drawn only by the wallet that holds it. Each piece is its own contract. THE SOURCE is the one piece anyone could one day see.</p>
+      <div class="filters">
+        <select data-filter="direction" aria-label="Direction"><option value="">direction · all</option></select>
+        <select data-filter="palette" aria-label="Palette"><option value="">palette · all</option></select>
+        <select data-filter="title" aria-label="Title"><option value="">title · all</option></select>
+        <select data-filter="state" aria-label="State"><option value="">state · all</option><option value="listed">for sale</option><option value="claimed">in its own contract</option><option value="drawn">drawn, not claimed</option><option value="sealed">not yet drawn</option></select>
+        <span class="tag" data-count>256 / 256</span>
+      </div>
+      <div class="grid" data-grid role="group" aria-label="The 256 pieces. Use the arrow keys to move between them."></div>
+      <p class="legend"><span><i></i>sealed</span><span><i class="l"></i>for sale</span><span>◆ THE SOURCE</span><span>colour bar: its public palette</span></p>
+      <p class="note" data-note></p>
+    </section>
+  </main>
+
+  <footer>
+    <span>All·rights·reserved·✶·ARTIFACTS·2026<span class="d"> · </span>by Myles Daughtry</span>
+    <span>Public·proof<span class="d">·</span><wbr>private·art<span class="d">·</span><wbr>one·irreversible·window</span>
+  </footer>
+</div>
+
+<div class="scrim" data-detail hidden>
+  <div class="modal wide" role="dialog" aria-labelledby="detail-title">
+    <div class="tb"><span id="detail-title" data-detail-title>ARTIFACTS</span><button class="x" type="button" data-detail-close data-modal-close data-close-first aria-label="Close">✕</button></div>
+    <div class="body" data-detail-body></div>
+  </div>
+</div>
+
+<script src="config.js?v=bbb209eea8"></script>
+<script src="wallet.js?v=ca231e4783"></script>
+<script src="palettes.js?v=6c02bf3a04"></script>
+<script src="chain.js?v=54d0c63230"></script>
+<script src="explore.js?v=d4f1f6be52"></script>
+</body>
+</html>

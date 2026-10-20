@@ -14,8 +14,9 @@ repository's checks unchanged.
   - `artifacts/RULES.md` and `artifacts/reference/rules.js`, the rules that draw the pieces;
   - `artifacts/reference/framed/*`, the framed pieces, and `artifacts/reference/the-source.payload.b64`, THE SOURCE's
     on-chain metadata;
+  - the palettes in `site/palettes.js` and `artifacts-site/palettes.js`, from the rules (R4);
   - any image drawn from a piece's seed.
-- **The design images** under `design/`, and the art under `site/art/`.
+- **The design images** under `design/`.
 - **The Proof House logo and wordmark**, wherever they appear, including the PH mark.
 - **The images under `docs/assets/`**: the banner and the social preview.
 

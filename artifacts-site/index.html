@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARTIFACTS · marketplace</title>
+  <meta name="description" content="ARTIFACTS by Myles Daughtry: 256 encrypted on-chain spectrums. Buy and sell through each piece's own contract.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f2ec'/%3E%3Ctext x='16' y='23' font-family='monospace' font-weight='700' font-size='20' text-anchor='middle' fill='%2316160f'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=8b38d74747">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html"><span class="br">[</span>Artifacts<span class="br">]</span>✶</a>
+      <nav aria-label="Main"><a href="index.html" aria-current="page">Marketplace</a><span class="d">·</span><a href="explore.html">Explore</a><span class="d">··</span><a href="about.html">About</a><span class="d">·</span><a href="docs.html">Docs</a><span class="d">··</span><button type="button" data-connect>Connect</button></nav>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <main id="main" data-market>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">// Marketplace · owner to owner</p>
+        <h1>256 sealed spectrums,<br>passed <span class="lock">hand to hand.</span></h1>
+        <p class="lede">Every sale runs through the piece's <b>own contract</b>: the buyer always receives the key to the piece they paid for, and the artist always receives the royalty. Nothing is held by this site.</p>
+        <div class="cta"><a class="btn dark" href="#for-sale">See what's for sale ↓</a><a class="btn" href="explore.html">Explore the archive →</a></div>
+        <div class="meta"><span><b>256</b> · each its own contract</span><span><b>90%</b> seller · <b>7.5%</b> artist · <b>2.5%</b> agent</span><span>primary sale on <a data-house href="#">Proof House ↗</a></span></div>
+      </div>
+      <div class="winwrap"><div class="win"><div class="tb"><span>ARTIFACTS <span class="mu">#???</span></span><span class="mu">SEALED</span></div><div class="menu"><span>File</span><span>View</span><span>Run</span><span class="sp"></span><span class="mu">ENCRYPTED</span></div><div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.3" r="1.5" fill="currentColor" stroke="none"/></svg><div class="s">SEALED</div></div><div class="sb"><span>OWNER-ONLY</span><span><b>ENCRYPTED</b> · ON-CHAIN</span></div></div></div>
+    </section>
+
+    <dl class="stats" aria-label="Collection stats">
+      <div><dt>Floor</dt><dd><span data-stat="floor">…</span><span class="stat-note" data-stat-note="floor">lowest listing</span></dd></div>
+      <div><dt>Listed</dt><dd><span data-stat="listed">…</span><span class="stat-note" data-stat-note="listed">of every piece</span></dd></div>
+      <div><dt>Volume</dt><dd><span data-stat="volume">…</span><span class="stat-note" data-stat-note="volume">all sales, all time</span></dd></div>
+      <div><dt>Holders</dt><dd><span data-stat="holders">…</span><span class="stat-note" data-stat-note="holders">unique wallets</span></dd></div>
+    </dl>
+
+    <ol class="steps" aria-label="How a sale works">
+      <li><b>1 · Buy</b>Your ETH goes into the piece's own escrow, with your viewing key.</li>
+      <li><b>2 · Key</b>The seller has 24 hours to send the piece's key to your viewing key, or refund you. If it hasn't come by then, you can cancel and take your ETH back.</li>
+      <li><b>3 · Confirm</b>Your browser checks the key opens the piece, then you release the payment. After 72 hours, anyone can.</li>
+      <li><b>Split</b>90% seller · 7.5% artist · 2.5% the agent who brought you (or the seller, if none).</li>
+    </ol>
+    <p class="msg" role="status" aria-live="polite" data-msg></p>
+
+    <section class="section" data-yours hidden aria-labelledby="yours-title">
+      <div class="shead"><span id="yours-title">// Yours</span><span data-yours-meta></span></div>
+      <div class="cards" data-yours-grid></div>
+    </section>
+
+    <section class="section" id="for-sale" aria-labelledby="sale-title">
+      <div class="shead"><span id="sale-title">// For sale</span><span data-listed-meta>reading the chain…</span></div>
+      <div class="cards" data-listed><p class="empty">Reading the chain…</p></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>All·rights·reserved·✶·ARTIFACTS·2026<span class="d"> · </span>by Myles Daughtry</span>
+    <span>Public·proof<span class="d">·</span><wbr>private·art<span class="d">·</span><wbr>one·irreversible·window</span>
+  </footer>
+</div>
+
+<div class="scrim" data-viewer hidden>
+  <div class="modal viewer" role="dialog" aria-labelledby="viewer-title">
+    <div class="tb"><span id="viewer-title" data-viewer-title>◆ THE SOURCE · private view · drawn in this browser, sent nowhere</span><span class="cta"><button class="btn sm" type="button" data-viewer-png="clear" hidden>Transparent PNG</button><button class="btn sm" type="button" data-viewer-png="white" hidden>White PNG</button><button class="x" type="button" data-viewer-close data-modal-close data-close-first aria-label="Close">✕</button></span></div>
+    <div class="art" data-viewer-art></div>
+  </div>
+</div>
+
+<script src="config.js?v=bbb209eea8"></script>
+<script src="wallet.js?v=ca231e4783"></script>
+<script src="sealcrypto.js?v=28f1fd9806"></script>
+<script src="palettes.js?v=6c02bf3a04"></script>
+<script src="chain.js?v=54d0c63230"></script>
+<script src="market.js?v=8cabedd22f"></script>
+</body>
+</html>

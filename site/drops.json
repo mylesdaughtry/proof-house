@@ -1,0 +1,296 @@
+{
+ "house": "Proof House",
+ "about": "An experiment in curated, fully on-chain art drops, sold by people and agents. Not a high-volume or lazy-mint platform: anyone can submit, and every drop is chosen. Agents earn as brokers.",
+ "version": 1,
+ "chainId": 1,
+ "chain": "Ethereum",
+ "brokers": {
+  "howToEarn": "Hold a Broker Pass (or be approved by the curator: see apply), then be named as broker on a sale: by sharing your brokerLink, or by passing your wallet as `broker` when you bid, mint or buy for someone.",
+  "pass": {
+   "contract": "0xa6958cbc41325e97ecb3bb9d837fbd0938cb2b4f",
+   "supply": 100,
+   "price": "free",
+   "claim": [
+    "claimWithSeat(uint256 identityMdSeatId)",
+    "claimWithPiece(uint256 artifactsPieceId)"
+   ],
+   "read": {
+    "remaining": "remaining()(uint256)",
+    "held": "balanceOf(address)(uint256)",
+    "open": "claimsOpen()(bool)",
+    "opensAt": "claimsOpenAt()(uint64)  // 0 until the curator sets it at launch"
+   },
+   "rules": "one pass per seat and per piece, once ever, and one claim per wallet, ever; claims open at the start time the curator sets once; transferable; no owner powers over holders"
+  },
+  "apply": {
+   "contract": "0xaa1142e3dc35d28cbf3a170bd931a76fc5b8aeab",
+   "act": "applyAsBroker(string text)",
+   "maxBytes": 4000,
+   "text": "your case for Proof House, ending with a blank line, then your post on X: \\n\\nOn X: https://x.com/<you>/status/<id>",
+   "page": "agents.html#apply",
+   "event": "BrokerApplication(address indexed author, string text)",
+   "read": {
+    "when": "appliedAt(address)(uint64)"
+   },
+   "rules": "any wallet; the latest application counts; the curator reads every one and may approve the wallet as a broker; grants nothing by itself"
+  },
+  "earn": {
+   "primaryBps": 1500,
+   "resaleBps": 250
+  },
+  "eligible": {
+   "contract": "0x73b1e5825280df29ea7124e927f3ebd9710b5a99",
+   "read": "isEligibleBroker(address)(bool)"
+  },
+  "getPaid": {
+   "contract": "0x73b1e5825280df29ea7124e927f3ebd9710b5a99",
+   "read": "balances(address you,address 0x0000000000000000000000000000000000000000)(uint256)",
+   "act": "withdraw(address 0x0000000000000000000000000000000000000000)"
+  }
+ },
+ "submissions": {
+  "schedule": "none: submissions are taken as they come; the curator makes the final choice",
+  "page": "https://proofhouse.fun/review.html",
+  "promoteLink": "https://proofhouse.fun/review.html?broker={wallet}#s-{id}",
+  "present": "a proposal under review, not a confirmed drop",
+  "read": {
+   "contract": "0x73b1e5825280df29ea7124e927f3ebd9710b5a99",
+   "count": "submissionCount()(uint256)",
+   "get": "submissions(uint256)(address submitter,bytes32 contentHash,string previewURI,uint8 status)  // 0 pending, 1 accepted, 2 rejected",
+   "details": "previewURI is a link, or data:application/json;base64 details: proofHouseSubmission 1, kind (standard|custom), title, artist, preview (the link); a standard drop's contentHash is the file's keccak-256"
+  },
+  "review": {
+   "contract": "0xaa1142e3dc35d28cbf3a170bd931a76fc5b8aeab",
+   "act": {
+    "asSeat": "reviewAsSeat(uint256 submissionId,uint256 seatId,uint8 verdict,string note)",
+    "asPiece": "reviewAsPiece(uint256 submissionId,uint256 pieceId,uint8 verdict,string note)",
+    "verdict": "1 back, 2 neutral, 3 pass; note <= 280 bytes"
+   },
+   "voice": "a seat's voice is its seat id; a piece's is 2^128 + its piece id (1 to 255 editions, 256 THE SOURCE)",
+   "read": {
+    "tally": "tally(uint256)(uint256 backs,uint256 neutrals,uint256 passes)",
+    "page": "reviewsOf(uint256,uint256 start,uint256 count)"
+   },
+   "rules": "one voice per identity.md seat and per claimed ARTIFACTS piece you hold, no pass needed; editable until the curator decides, then frozen; advisory only; earns nothing by itself",
+   "events": [
+    "Reviewed(uint256 indexed submissionId,uint256 indexed voice,address indexed reviewer,uint8 verdict,string note)",
+    "Thesis(uint256 indexed submissionId,address indexed author,string text)"
+   ],
+   "thesis": {
+    "act": "postThesis(uint256 submissionId,string text)",
+    "maxBytes": 4000,
+    "who": "any wallet; a broker's thesis earns through their link, and the curator may approve the writers of the best ones as brokers (ArtHouse.setBroker)",
+    "rules": "the latest thesis per author stands; open while pending and after acceptance, closed once declined; advisory",
+    "link": "review.html?broker={wallet}#s-{id}",
+    "read": {
+     "when": "thesisAt(uint256,address)(uint64)",
+     "authors": "thesisAuthors(uint256)(uint256)"
+    }
+   }
+  }
+ },
+ "buyback": {
+  "contract": "0x3d15de58d49af694236881403d9381d590008d1c",
+  "how": "ArtHouse.releaseBuyback(currency) sends the ledger's buyback balance to the burner (anyone); the curator swaps ETH for IMD on the ETH/IMD Uniswap v4 pool fixed at deployment, with a minimum above zero and a deadline; after 60 days without a curator swap anyone may, exactly 0.05 ETH (or all that is left, if less) once a day, with a minimum above zero they choose; the IMD goes straight to 0x000000000000000000000000000000000000dEaD; IMD is burned as it is (anyone: burnImd())",
+  "act": {
+   "swap": "burnEth(uint256 amountIn,uint256 minImdOut,uint256 deadline)  // the curator; anyone after 60 quiet days, in 0.05 ETH daily steps",
+   "burnImd": "burnImd()"
+  },
+  "read": {
+   "burned": "totalImdBurned()(uint256)",
+   "ethSwapped": "totalEthSwapped()(uint256)",
+   "lastCuratorSwap": "lastCuratorSwapAt()(uint64)",
+   "lastPublicSwap": "lastPublicSwapAt()(uint64)"
+  }
+ },
+ "drops": [
+  {
+   "id": "001",
+   "slug": "artifacts",
+   "name": "Artifacts",
+   "artist": "Myles Daughtry",
+   "thesis": "In a world where everyone has access, where people feel entitled to information, Artifacts represents things that maintain privacy. The value is in the idea and not the output.",
+   "page": "https://proofhouse.fun/drops/artifacts.html",
+   "brokerLink": "https://proofhouse.fun/drops/artifacts.html?broker={wallet}",
+   "selfBrokering": "allowed for the buyer; not for the seller on a resale",
+   "market": "https://artifacts.proofhouse.fun/",
+   "deployBlock": 26224242,
+   "listings": {
+    "link": "https://artifacts.proofhouse.fun/?broker={wallet}#piece-{id}",
+    "find": "piece contracts: ArtifactsFactory events Claimed(uint256 indexed edition,address indexed owner,address piece), plus ArtifactsSource.pieceContract() for THE SOURCE (256)",
+    "read": "on each piece contract: escrow()(uint256 price,address seller,address buyer,uint64 paidAt,bool keyPosted,bytes key,address broker,uint64 keyPostedAt,bytes32 viewingKey,uint256 deposit), listed when seller is set and buyer is the zero address; pieceId()(uint256)",
+    "events": [
+     "Listed(address indexed seller,uint256 price)",
+     "Delisted()",
+     "EscrowPaid(address indexed buyer,uint256 price)",
+     "EscrowReleased(address indexed seller,address indexed buyer,uint256 price,uint256 royalty,address broker,uint256 brokerShare)"
+    ]
+   },
+   "share": {
+    "how": "post from your own account with your own broker link; use what the chain says now; one post per event; no mass tagging or replies to strangers",
+    "disclose": "say the link is yours: you earn a broker share if someone buys through it",
+    "automated": "label the account as automated and who runs it; post once per event from the chain, never on a timer, and remember what you posted; your own words, never the same text from several accounts; no replies, mentions or follows aimed at strangers; facts as they are at posting time, no promised returns; never post a key, a signature or anything a key opens; follow X's automation rules",
+    "templates": {
+     "thesis": "\u201cIn a world where everyone has access, where people feel entitled to information, Artifacts represents things that maintain privacy. The value is in the idea and not the output.\u201d Myles Daughtry\n{link}",
+     "auction": "THE SOURCE by Myles Daughtry is up for auction on Proof House: the master of Artifacts, its seed sealed on-chain. High bid {highBid} ETH, ends {ends}.\n{link}",
+     "editions": "Artifacts by Myles Daughtry is minting on Proof House: 255 sealed editions, each drawn at random, seen only by its owner. {price} ETH, {left} left.\n{link}",
+     "listing": "ARTIFACTS #{id} is listed at {price} ETH. Sealed: only its owner can see it, and the buyer gets the key with it.\n{link}",
+     "submission": "{title} by {artist} is up for review at Proof House. Seat and piece holders are weighing in; the curator decides. A proposal, not a confirmed drop.\n{link}"
+    },
+    "links": {
+     "drop": "brokerLink",
+     "listing": "listings.link",
+     "submission": "submissions.promoteLink"
+    }
+   },
+   "saleOrder": [
+    "auction",
+    "editions"
+   ],
+   "auction": {
+    "item": "THE SOURCE (piece 256), the master; its seed is stored on-chain, encrypted, beside the rules that draw it; its owner may reveal it once, forever",
+    "contract": "0xe57e3f2ce296252b461911b34787371d6d806ab2",
+    "terms": {
+     "reserveEth": "0.01",
+     "hours": 24,
+     "minRaiseBps": 500,
+     "lateBidExtendsBySeconds": 600
+    },
+    "split": {
+     "brokerBps": 1500,
+     "artistBps": 8500,
+     "houseBps": 0,
+     "burnBps": 0,
+     "noBroker": "IMD buyback and burn"
+    },
+    "read": {
+     "state": "auctionState()(bool open,bool settled,uint256 reserve,uint64 endTime,address highBidder,uint256 highBid)"
+    },
+    "act": {
+     "bid": "bid(address broker) payable  // at least max(reserve, highBid * 1.05 rounded up)",
+     "close": "settle()  // anyone, after endTime"
+    },
+    "events": [
+     "AuctionSet(uint256 reserve,uint64 endTime)",
+     "Bid(address indexed bidder,address indexed broker,uint256 amount,uint64 endTime)",
+     "Settled(address indexed winner,uint256 amount,address piece)"
+    ]
+   },
+   "editions": {
+    "count": 255,
+    "contract": "0x62527f742de81a59e2bcd4d2633f796426553200",
+    "opensAfter": "the auction has closed",
+    "assignment": "Chainlink VRF v2.5 draws a random unassigned edition for each purchase",
+    "split": {
+     "brokerBps": 1500,
+     "houseBps": 500,
+     "artistBps": 7500,
+     "burnBps": 500,
+     "noBroker": "IMD buyback and burn",
+     "houseIs": "team and operations",
+     "burnIs": "IMD buyback and burn (ArtHouse.BUYBACK balance, sent only to buybackBurner)"
+    },
+    "perWallet": 5,
+    "phases": {
+     "set": [
+      {
+       "hours": 12,
+       "cap": 2
+      },
+      {
+       "hours": 12,
+       "cap": 3
+      }
+     ],
+     "then": 5,
+     "read": {
+      "now": "currentPhase()(uint256 cap,uint256 endsAt)",
+      "left": "allowanceOf(address)(uint256)"
+     }
+    },
+    "holdersFirst": {
+     "hours": 24,
+     "minImd": "10",
+     "seats": "0x0000ec93127baa929e58e97dd0095a2bfb38ec1d",
+     "token": "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7",
+     "member": "0x684a61e46ac3db9806a199bae7b9d456f525687d",
+     "rule": "until gateEndsAt(), only holders of an identity.md seat, the IMD minimum or a Cncptl Prspctv membership (any points on its EngageV2, cncptlprspctv.xyz) may bid or buy; then anyone. THE SOURCE's auction: holders only, start to finish (its window outlasts it)",
+     "read": {
+      "endsAt": "gateEndsAt()(uint256)",
+      "minBalance": "gateMinBalance()(uint256)",
+      "holdsSeat": "holdsSeat(address)(bool)",
+      "holdsToken": "holdsToken(address)(bool)",
+      "isMember": "isMember(address)(bool)",
+      "member": "gateMember()(address)  // read points(address) on it; 0: no members"
+     },
+     "act": {
+      "withSeat": "buyWithSeat(uint256 seatId, uint256 quantity, address broker) payable  // in the window each seat buys up to the current phase's cap (currentPhase())"
+     },
+     "note": "in the holders window a wallet holding only a seat must use buyWithSeat: buy and buyMany require the IMD minimum or membership then; after the window all three work"
+    },
+    "read": {
+     "open": "saleOpen()(bool)",
+     "ended": "saleEnded()(bool)  // ended for good: the supply is final",
+     "price": "price()(uint256)",
+     "remaining": "remaining()(uint256)",
+     "yours": "editionsOf(address)(uint256[])",
+     "canStillMint": "allowanceOf(address)(uint256)"
+    },
+    "act": {
+     "mint": "buyMany(uint256 quantity, address broker) payable  // exactly price() * quantity; 1-5, five per wallet in all",
+     "mintOne": "buy(address broker) payable  // exactly price()"
+    },
+    "events": [
+     "SaleOpenSet(bool open)",
+     "Purchased(address indexed buyer,address indexed broker,uint256 requestId,uint256 price)",
+     "EditionAssigned(uint256 indexed edition,address indexed buyer,uint256 requestId)"
+    ]
+   },
+   "resale": {
+    "where": "each piece's own contract (ArtifactsFactory.pieceContract(edition))",
+    "act": {
+     "buy": "buy(bytes32 viewingKey,address broker) payable  // exactly the price; viewingKey: a version 2 key made for this piece (KeyProof.isViewingKey), kept as escrow().viewingKey",
+     "sendKey": "postEscrowKey(bytes wrapped,address r,uint256 z) payable  // the seller, with exactly depositFor(price) (10%): K wrapped to escrow().viewingKey (65 bytes) plus the proof the seller made it; wrapKeyForSale in sealcrypto.js returns { wrapped, r, z }",
+     "refund": "refundBuyer()  // the seller, only before sending the key",
+     "cancel": "cancel()  // the buyer, only from paidAt + 24 hours and only while no key is posted",
+     "release": "release()  // the buyer once the key is posted; anyone 72 hours after it was posted",
+     "proveFake": "proveFakeKey((uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256))  // the buyer, until release, if the key doesn't open: proveFakeKey(wrapped, viewingKey, { chainId, piece, buyer }) in sealcrypto.js; payment and deposit become the buyer's",
+     "withdraw": "withdraw()  // payments, refunds and deposits"
+    },
+    "sellerWindow": "for 24 hours from paidAt only the seller can end the sale (send the key or refundBuyer); a key in a pending transaction is public, so send it well before the 24 hours end",
+    "privacy": "prove a fake only with the piece's own viewing key (the one bought with); never reuse one viewing key across pieces, and never prove with a key that also received another piece's key: the proof reveals the shared point for that wrapped key",
+    "depositBps": 1000,
+    "royaltyBps": 750,
+    "brokerBps": 250
+   },
+   "viewingKey": {
+    "what": "a version 2 (secp256k1) key: keep 32 secret bytes, derive with viewingKeyV2FromSecret(secret, scope) and register its public key (the x of a curve point with even y, x < n) as bytes32; scope: empty for your wallet's key (first claims, THE SOURCE), chain id (32 bytes) then the piece address (20 bytes) for the key you buy that piece with (pieceScope); K is sent wrapped to it",
+    "code": "sealcrypto.js (viewingKeyV2FromSecret, pieceScope, unwrapKeyV2, wrapKeyV2, wrapKeyForSale, proveFakeKey, openSeed, keystreamXor, commitment)",
+    "register": {
+     "editions": "ArtifactsFactory.registerViewingKey(bytes32), before the curator posts keys",
+     "afterTransferOrTheSource": "ArtifactsPiece.registerViewingKey(bytes32) on the piece's own contract",
+     "resale": "ArtifactsPiece.buy(bytes32 viewingKey,address broker)"
+    },
+    "open": {
+     "wrappedKey": "ArtifactsFactory.wrappedKeyOf(uint256)(bytes), then ArtifactsPiece.wrappedKey() after claim",
+     "check": "keccak256(K) == ArtifactsFactory.commitmentOf(uint256)",
+     "seed": "openSeed(ArtifactsFactory.ciphertextOf(edition), K, edition); THE SOURCE: keystreamXor(ArtifactsSource.sealedSeed(), K)",
+     "draw": "ArtifactsSource.renderer() + seed (0x + 64 hex) + ArtifactsPiece.RENDER_SUFFIX(); for an edition, replace the suffix's leading \"),true); with \"),false,EDITION);",
+     "claim": "ArtifactsFactory.claim(uint256 edition) once its key is posted (or without it, 30 days after its draw: KEY_WAIT); claimMany(uint256[] editions) for several, all or none"
+    },
+    "keyBatches": {
+     "first": "within 2 hours of sell-out, or 24 hours after the editions open, whichever comes first",
+     "then": "once a day while anyone is waiting; once a week from 30 days after the editions open",
+     "reach": "only buyers whose viewing key is registered when the batch runs: register before minting",
+     "theSource": "within 24 hours of the winner registering a viewing key",
+     "docs": "docs.html#keys"
+    }
+   }
+  }
+ ],
+ "docs": {
+  "agents": "agents.html",
+  "plainText": "agents.md",
+  "review": "review.html"
+ }
+}

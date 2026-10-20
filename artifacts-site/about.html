@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARTIFACTS · about</title>
+  <meta name="description" content="ARTIFACTS by Myles Daughtry: public proof, private art, one irreversible window.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f2ec'/%3E%3Ctext x='16' y='23' font-family='monospace' font-weight='700' font-size='20' text-anchor='middle' fill='%2316160f'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=8b38d74747">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html"><span class="br">[</span>Artifacts<span class="br">]</span>✶</a>
+      <nav aria-label="Main"><a href="index.html">Marketplace</a><span class="d">·</span><a href="explore.html">Explore</a><span class="d">··</span><a href="about.html" aria-current="page">About</a><span class="d">·</span><a href="docs.html">Docs</a><span class="d">··</span><button type="button" data-connect>Connect</button></nav>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <p class="eyebrow">// About</p>
+      <h1 class="h2">Public proof, private art, one irreversible window.</h1>
+      <p class="quote">In a world where everyone has access, where people feel entitled to information, Artifacts represents things that maintain privacy. The value is in the idea and not the output.</p>
+      <p class="quote-by">Myles Daughtry</p>
+
+      <div class="cols">
+        <div>
+          <p class="lede"><b>ARTIFACTS</b> is 256 generative spectrums: colour fields drawn as a halftone of tiny marks, each inside its own OS window. <b>The frame is the work.</b> One algorithm, 256 seeds; each seed picks a palette, a direction and a character.</p>
+          <p class="lede"><b>Blind by design.</b> Each piece's seed is sealed on-chain. Its owner's wallet opens it and draws it in their own browser, sending nothing anywhere. Everyone else sees the seal and its public traits. What an owner does with their own piece is theirs to decide.</p>
+          <p class="lede"><b>Each piece is its own contract.</b> Its seed sits on-chain, sealed, in a contract of its own, and the piece becomes its own token contract when it is claimed. Nothing is pooled: every work stands alone, with its own key, its own resale and its own royalty.</p>
+          <p class="lede"><b>THE SOURCE.</b> The master holds every colour and every direction at once, the full prism the editions are fragments of. Its seed is secret too. Its owner holds one irreversible power: publish its key, and anyone can draw it forever; or keep the silence.</p>
+          <p class="lede"><b>The rules are public, the seeds are not.</b> The algorithm that draws every piece is published and stored on-chain; the same rules draw the same bytes in any browser. What stays private is the seed: the idea of each piece.</p>
+          <p class="lede">First sold through <a data-house href="#">Proof House</a>: THE SOURCE by auction, then 255 editions drawn at random. After that, owner to owner, <a href="index.html">here</a>.</p>
+        </div>
+        <div>
+          <div class="winwrap" style="justify-self:start"><div class="win"><div class="tb"><span>ARTIFACTS ◆ <span class="mu">MASTER</span></span><span class="mu">SEALED</span></div><div class="menu"><span>File</span><span>View</span><span>Reveal</span><span class="sp"></span><span class="mu">ENCRYPTED</span></div><div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.3" r="1.5" fill="currentColor" stroke="none"/></svg><div class="s">SEALED</div></div><div class="sb"><span>THE SOURCE</span><span><b>FIDELITY</b> · MAX · 1/1</span></div></div></div>
+          <div style="margin-top:26px">
+            <div class="kv"><span class="k">pieces</span><span class="v">256 · 1 master · 255 editions</span></div>
+            <div class="kv"><span class="k">artist</span><span class="v">Myles Daughtry</span></div>
+            <div class="kv"><span class="k">seeds</span><span class="v">sealed on-chain · opened only by the owner</span></div>
+            <div class="kv"><span class="k">rules</span><span class="v">public · stored on-chain</span></div>
+            <div class="kv"><span class="k">contracts</span><span class="v">one per piece</span></div>
+            <div class="kv"><span class="k">resale</span><span class="v">7.5% to the artist, always</span></div>
+          </div>
+          <div style="margin-top:18px">
+            <span class="tag">256 on-chain</span><span class="tag">owner-only viewing</span><span class="tag">each piece its own contract</span><span class="tag">one irreversible reveal</span><span class="tag">Ethereum</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>All·rights·reserved·✶·ARTIFACTS·2026<span class="d"> · </span>by Myles Daughtry</span>
+    <span>Public·proof<span class="d">·</span><wbr>private·art<span class="d">·</span><wbr>one·irreversible·window</span>
+  </footer>
+</div>
+<script src="config.js?v=bbb209eea8"></script>
+<script src="wallet.js?v=ca231e4783"></script>
+<script>
+  document.querySelectorAll('[data-house]').forEach((a) => { a.href = (window.ProofHouseWallet && window.ProofHouseWallet.cfg.houseUrl) || '#'; });
+</script>
+</body>
+</html>
