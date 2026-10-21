@@ -77,12 +77,18 @@
     return 'sealed';
   }
 
+  // A piece is owned once it is drawn to a buyer: its holder is its token's owner once claimed, its buyer until then.
+  const isOwned = (id) => ['drawn', 'claimed', 'listed'].includes(stateOf(id));
+  const holderOf = (id) => (S.pieces[id] && S.pieces[id].owner) || (S.drawn[id] !== W.ZERO ? S.drawn[id] : null);
+
   function paint() {
     const sets = { direction: new Set(), palette: new Set(), title: new Set() };
     grid.querySelectorAll('.cell[data-id]').forEach((c) => {
       const id = Number(c.dataset.id);
       c.classList.toggle('listed', stateOf(id) === 'listed');
+      c.classList.toggle('owned', id !== 256 && isOwned(id) && stateOf(id) !== 'listed');
       if (id === 256) {
+        if (S.source && S.source.settled && holderOf(256)) c.title = `THE SOURCE · owned by ${W.short(holderOf(256))}`;
         // once THE SOURCE is revealed its tile shows the art, drawn from its on-chain page
         const src = S.pieces[256];
         if (src && src.revealed && !c.querySelector('[data-art-for]')) {
@@ -96,10 +102,13 @@
       const t = S.traits[id];
       if (!t) return;
       c.dataset.direction = t.direction; c.dataset.palette = t.palette; c.dataset.title = t.title;
-      c.title = `#${C.pad3(id)} · ${t.title} · ${t.palette} · ${t.k}C · ${t.direction}`;
+      const who = holderOf(id);
+      c.title = `#${C.pad3(id)} · ${t.title} · ${t.palette} · ${t.k}C · ${t.direction} · ${isOwned(id) && who ? `owned by ${W.short(who)}` : 'not yet minted'}`;
       c.querySelector('.bar').style.background = strip(t.palette, t.k);
       sets.direction.add(t.direction); sets.palette.add(t.palette); sets.title.add(t.title);
     });
+    const owned = Array.from({ length: EDITIONS }, (_, i) => i + 1).filter(isOwned).length;
+    $('[data-owned]').textContent = `owned · ${owned} of ${EDITIONS}`;
     filters.filter((f) => sets[f.dataset.filter]).forEach((sel) => {
       const have = new Set(Array.from(sel.options).map((o) => o.value));
       Array.from(sets[sel.dataset.filter]).sort().forEach((v) => { if (!have.has(v)) { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.append(o); } });
@@ -113,7 +122,7 @@
     grid.querySelectorAll('.cell[data-id]').forEach((c) => {
       const id = Number(c.dataset.id);
       const ok = ['direction', 'palette', 'title'].every((k) => !want[k] || (id !== 256 && c.dataset[k] === want[k]))
-        && (!want.state || stateOf(id) === want.state);
+        && (!want.state || (want.state === 'owned' ? id !== 256 && isOwned(id) : stateOf(id) === want.state));
       c.classList.toggle('dim', !ok);
       if (ok) shown++;
     });
@@ -138,6 +147,7 @@
     if (t) { kv('title', C.esc(t.title)); kv('palette', C.esc(t.palette)); kv('colours', t.k); kv('direction', C.esc(t.direction)); }
     else kv('piece', 'THE SOURCE · 1/1 · the master');
     kv('state', STATE_TEXT[st] + (id === 256 && p && p.revealed ? ' · revealed, public forever' : ''));
+    if (!p && st === 'drawn' && holderOf(id)) kv('owner', W.short(holderOf(id)));
     if (p) {
       kv('owner', W.short(p.owner));
       const href = W.explorer('address', p.address);

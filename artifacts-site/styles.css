@@ -152,6 +152,9 @@ select { font-size: 12px; background: var(--win); border: 1px solid var(--ink); 
 .legend { display: flex; gap: 16px; flex-wrap: wrap; color: var(--mut); font-size: 11px; margin: 10px 0 0; }
 .legend i { display: inline-block; width: 10px; height: 10px; border: 1px solid var(--line); background: #efece4; vertical-align: -1px; margin-right: 5px; }
 .legend i.l { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink) inset; }
+.legend i.o { border-color: var(--ink); background: var(--ink); }
+/* owned: drawn to a collector, whether claimed or not (a listed piece keeps its for-sale outline) */
+.cell.owned { background: var(--ink); border-color: var(--ink); }
 
 /* panel (explore detail) */
 .scrim { position: fixed; inset: 0; background: rgba(22, 22, 15, .46); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 20px; }
@@ -279,5 +282,6 @@ nav button[data-connect] { padding: 6px 12px; border: 1px solid var(--ink); bord
 section, .card, [id] { scroll-margin-top: 110px; }
 /* the explorer's numbers readable, and a clear ring on the piece in focus */
 .cell .k { color: #6b675c; }
+.cell.owned .k { color: var(--paper); }
 .cell:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 @media (max-width: 640px) { nav a, nav button[data-connect] { display: inline-block; min-height: 32px; padding-top: 6px; padding-bottom: 6px; } }

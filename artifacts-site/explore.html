@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f2ec'/%3E%3Ctext x='16' y='23' font-family='monospace' font-weight='700' font-size='20' text-anchor='middle' fill='%2316160f'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8b38d74747">
+  <link rel="stylesheet" href="styles.css?v=fed4e48d73">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -30,11 +30,11 @@
         <select data-filter="direction" aria-label="Direction"><option value="">direction · all</option></select>
         <select data-filter="palette" aria-label="Palette"><option value="">palette · all</option></select>
         <select data-filter="title" aria-label="Title"><option value="">title · all</option></select>
-        <select data-filter="state" aria-label="State"><option value="">state · all</option><option value="listed">for sale</option><option value="claimed">in its own contract</option><option value="drawn">drawn, not claimed</option><option value="sealed">not yet drawn</option></select>
+        <select data-filter="state" aria-label="State"><option value="">state · all</option><option value="owned">owned</option><option value="listed">for sale</option><option value="claimed">in its own contract</option><option value="drawn">drawn, not claimed</option><option value="sealed">not yet drawn</option></select>
         <span class="tag" data-count>256 / 256</span>
       </div>
       <div class="grid" data-grid role="group" aria-label="The 256 pieces. Use the arrow keys to move between them."></div>
-      <p class="legend"><span><i></i>sealed</span><span><i class="l"></i>for sale</span><span>◆ THE SOURCE</span><span>colour bar: its public palette</span></p>
+      <p class="legend"><span><i></i>not yet minted</span><span><i class="o"></i><span data-owned>owned</span></span><span><i class="l"></i>for sale</span><span>◆ THE SOURCE</span><span>colour bar: its public palette</span></p>
       <p class="note" data-note></p>
     </section>
   </main>
@@ -56,6 +56,6 @@
 <script src="wallet.js?v=ca231e4783"></script>
 <script src="palettes.js?v=6c02bf3a04"></script>
 <script src="chain.js?v=54d0c63230"></script>
-<script src="explore.js?v=d4f1f6be52"></script>
+<script src="explore.js?v=133d217f39"></script>
 </body>
 </html>
