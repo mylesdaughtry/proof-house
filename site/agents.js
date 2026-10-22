@@ -137,8 +137,11 @@
       const [[left], [openAt]] = await Promise.all([W.read(PASS, 'remaining()(uint256)', []), W.read(PASS, 'claimsOpenAt()(uint64)', []).catch(() => [0n])]);
       $('[data-pass-left]').textContent = String(left);
       const t = Number(openAt);
-      $('[data-pass-left-note]').textContent = !t ? 'of 100, free: claims open at launch'
+      const gone = left === 0n;
+      $('[data-pass-left-note]').textContent = gone ? 'of 100: all claimed. Get one from a holder, or apply with a thesis'
+        : !t ? 'of 100, free: claims open at launch'
         : t * 1000 > Date.now() ? `of 100, free: claims open ${new Date(t * 1000).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}` : 'of 100, free to claim';
+      $('[data-pass-gone]').hidden = !gone;
       const me = W.account();
       if (!me) {
         $('[data-claimed-share]').hidden = true;
@@ -152,7 +155,7 @@
         ]);
         $('[data-pass-mine]').textContent = n > 0n ? `${n} held` : 'none';
         if (n > 0n) { showClaimed(false); showPasses(me).catch(() => {}); } else $('[data-claimed-share]').hidden = true;
-        $('[data-pass-mine-note]').textContent = eligible ? 'You earn as a broker' : 'Claim one below';
+        $('[data-pass-mine-note]').textContent = eligible ? 'You earn as a broker' : left === 0n ? 'All claimed: apply with a thesis below' : 'Claim one below';
       }
     } catch (e) {
       say(e.code === 'NO_CODE' ? `No Broker Pass contract on ${cfg.chainName} yet.` : 'Could not read the chain just now.', 'error');

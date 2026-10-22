@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="styles.css?v=147b43501a">
+  <link rel="stylesheet" href="styles.css?v=2c5ac82cff">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -106,7 +106,7 @@
         <h2>Claiming and viewing</h2>
         <p>Artifacts are encrypted: the chain holds each piece's seed only as ciphertext. After your edition is drawn:</p>
         <ol class="docs-list">
-          <li>Create your viewing key under Yours on the drop page: one signature, one transaction. It covers every edition you hold.</li>
+          <li>Create your viewing key under Yours on the drop page: one signature, one transaction. It covers every edition you hold. Minted with a Safe or another smart-contract wallet? It can't give that signature: use the <a href="safe.html">Safe page</a> instead.</li>
           <li>The curator wraps each of your editions' keys to it, offline, and posts them on-chain in a batch (see <a href="#keys">When your key arrives</a>).</li>
           <li>View privately: your browser opens the key, decrypts the seed and draws the art. Save it as a PNG, on a transparent or a white background, if you like.</li>
           <li>Claim: this deploys your piece's own contract, holding your one token. It is a full contract (about 5.5 million gas, so a few cents at low gas, more when the network is busy), and there is no rush: claim whenever gas is low. You can view it before or after claiming. With several ready, Claim all claims them two at a time: each piece is a full contract, and an Ethereum transaction holds two.</li>
@@ -215,6 +215,8 @@
           <dd>Any browser extension wallet: MetaMask, Rabby, Coinbase Wallet, Phantom, Rainbow and others. With more than one installed, Connect lets you choose, remembers your choice and has a Disconnect. On a phone, open the site in your wallet app's own browser. Viewing your pieces needs an ordinary wallet account; smart-contract wallets can still buy, and agents can make their own viewing key (see <a href="agents.md">agents.md</a>).</dd>
           <dt>What is a viewing key?</dt>
           <dd>A key pair your browser makes from one wallet signature. Its public half goes on-chain so keys can be sent to you; the private half is remade from the same signature whenever you view, and never leaves the page. The message names the network, so a test network's keys are never mainnet's. Treat that signature like a password: only sign it on proofhouse.fun or its ARTIFACTS market. Your wallet must sign the same way every time, so the first time, the page asks twice and checks; a wallet that signs differently each time (some MPC wallets) is refused before anything is registered. On this site it needs an ordinary wallet account; agents and smart-contract wallets can make their own viewing key instead (see <a href="agents.md">agents.md</a>).</dd>
+          <dt>I minted with a Safe (or another smart-contract wallet).</dt>
+          <dd>A Safe can't give the one signature the drop page makes a viewing key from. The <a href="safe.html">Safe page</a> makes one from a random secret instead, in your browser: you save the secret file, your Safe registers the public key with one transaction (a ready file for the Safe app's Transaction Builder), and the curator sends your editions' keys to it in the next batch. The same page opens them with your secret file and gives you the claim transactions for the Safe.</dd>
           <dt>I was outbid.</dt>
           <dd>Your bid is held for you. Take it back from THE SOURCE's section on the drop page.</dd>
           <dt>Can anyone see my piece?</dt>
@@ -236,7 +238,7 @@
   </div>
 </footer>
 <script src="deployment.js?v=133224b849"></script>
-<script src="mint.js?v=ca231e4783"></script>
+<script src="mint.js?v=c3a8911ae3"></script>
 <script>
   // Fill in the current network's contracts from deployment.js.
   (function () {

@@ -77,6 +77,8 @@
     }
     const cta = phase === 'Auction live' ? 'Bid on THE SOURCE →' : phase === 'Sold out' ? 'Open the drop →' : 'Mint →';
     set('[data-home-phase]', phase); set('[data-home-row]', row); set('[data-home-cta]', cta);
+    // the hero's first button: a collector's way in, named for what the drop is doing now
+    set('[data-hero-collect]', phase === 'Auction live' ? 'Bid on THE SOURCE →' : phase === 'Sold out' ? 'See ARTIFACTS →' : open ? 'Mint ARTIFACTS →' : 'See Drop 001 →');
     set('[data-home-k1]', k1); set('[data-home-v1]', v1); set('[data-home-k2]', k2); set('[data-home-v2]', v2);
     document.querySelectorAll('[data-home-live]').forEach((el) => el.classList.toggle('on', live));
   }

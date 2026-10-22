@@ -786,7 +786,7 @@
     const hexText = '0x' + Array.from(utf8(text), (b) => b.toString(16).padStart(2, '0')).join('');
     const raw = await wallet.request({ method: 'personal_sign', params: [hexText, signer] });
     if (typeof raw !== 'string' || !/^0x[0-9a-fA-F]{130}$/.test(raw)) {
-      throw new UserError('Your wallet returned a signature this page cannot use. Viewing keys need an ordinary wallet account.');
+      throw new UserError('Your wallet returned a signature this page cannot use. Viewing keys need an ordinary wallet account. For a Safe or another smart-contract wallet, use proofhouse.fun/safe.');
     }
     const sig = canonical(raw);
     // The key is derived from this signature, so it must be the account's own, and the same every time: recover the

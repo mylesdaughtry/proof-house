@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Safe viewing key · Proof House</title>
+  <meta name="description" content="ARTIFACTS editions held by a Safe or another smart-contract wallet: make its viewing key, register it from the Safe, then open and claim the editions.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='21.5' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='14' text-anchor='middle' fill='%23ECEADF'%3EPH%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css?v=2c5ac82cff">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Proof House home">
+      <span class="brand-mark" aria-hidden="true">PH</span>
+      <span class="brand-name">Proof House</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="drops/artifacts.html#mint">Mint</a>
+      <a href="https://artifacts.proofhouse.fun/" data-market-link>Marketplace</a>
+      <a href="submit.html">Artists</a>
+      <a href="review.html">Review</a>
+      <a href="agents.html">For agents</a>
+      <a href="docs.html">Docs</a>
+      <button class="btn btn-sm" type="button" data-connect>Connect</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="paper">
+  <div class="wrap safe-page" data-safe>
+    <p class="kicker">ARTIFACTS · Safe and smart-contract wallets</p>
+    <h1 class="piece-title display">Your Safe's viewing key</h1>
+    <p class="statement">Every edition is sealed, and its key is sent to its owner's viewing key. The drop page makes a viewing key from one wallet signature, which a Safe (or any smart-contract wallet) can't give. This page makes one from a random secret instead, in this browser. You keep the secret in a file; only its public half goes on-chain, registered by your Safe. The secret never leaves this browser except as the file you save, and nothing on this page can move or spend anything.</p>
+
+    <section class="safe-step">
+      <h2 class="safe-h">1 · Your Safe</h2>
+      <label class="handover-label" for="safe-addr">The wallet that minted the editions</label>
+      <div class="handover-row">
+        <input class="handover-input" id="safe-addr" placeholder="0x… your Safe's address" spellcheck="false" autocomplete="off" data-safe-addr>
+        <button class="btn btn-solid btn-sm" type="button" data-safe-look>Look it up</button>
+      </div>
+      <div class="actions safe-return"><button class="btn btn-sm" type="button" data-open-pick-1>Back with your secret file? Open it</button></div>
+      <dl class="facts safe-facts" data-safe-facts hidden></dl>
+      <p class="mint-message" role="status" aria-live="polite" data-safe-msg></p>
+    </section>
+
+    <section class="safe-step" data-step-make hidden>
+      <h2 class="safe-h">2 · Make its viewing key</h2>
+      <p class="mint-note safe-note">One click makes a random secret and the viewing key it gives. Save the secret file before anything else: it is the only way to open the editions sent to this key, and nobody can make it again for you.</p>
+      <p class="mint-note safe-warn" data-make-replace hidden>This wallet already has a viewing key registered. Make a new one only if its secret is lost. Keys already sent to the old one open only with the old secret; for editions not yet claimed, the curator can send them again to the new one.</p>
+      <div class="actions">
+        <button class="btn btn-solid btn-sm" type="button" data-make>Make a viewing key</button>
+        <button class="btn btn-sm" type="button" data-make-save hidden>Save the secret file</button>
+        <button class="btn btn-sm" type="button" data-make-load>Already made one? Use its file</button>
+      </div>
+      <label class="safe-check" data-make-confirm hidden><input type="checkbox" data-make-saved> I have saved the secret file somewhere safe, and can find it again.</label>
+      <dl class="facts safe-facts" data-make-facts hidden></dl>
+      <p class="mint-message" role="status" aria-live="polite" data-make-msg></p>
+      <p class="mint-note safe-note" data-make-keep hidden>Keep the file the way the Safe's owners keep a seed phrase: private, backed up, never pasted into a chat or a site. Anyone holding it can see this wallet's editions, though it can't move them. Each owner who should see the art needs a copy.</p>
+    </section>
+
+    <section class="safe-step" data-step-register hidden>
+      <h2 class="safe-h">3 · Register it from the Safe</h2>
+      <p class="mint-note safe-note">One transaction from your Safe, to the ArtifactsFactory, with 0 ETH. Download it here, then in the Safe app: Apps → <b>Transaction Builder</b> → drag the file in (or choose it) → Create batch → Send batch, and collect your owners' signatures as usual.</p>
+      <div class="actions">
+        <button class="btn btn-solid btn-sm" type="button" data-reg-file>Download the Safe transaction</button>
+        <button class="btn btn-sm" type="button" data-reg-check>Check it is registered</button>
+      </div>
+      <details class="safe-manual">
+        <summary>Or enter it by hand (Transaction Builder, or any wallet that can call a contract)</summary>
+        <dl class="facts safe-facts" data-reg-manual></dl>
+      </details>
+      <p class="mint-message" role="status" aria-live="polite" data-reg-msg></p>
+    </section>
+
+    <section class="safe-step" data-step-open hidden>
+      <h2 class="safe-h">4 · See your editions</h2>
+      <p class="mint-note safe-note">Once the curator has sent their keys (they go out in batches to every registered viewing key: daily, then weekly from day 30), open them with your secret file. Each edition is drawn here, from its sealed seed and the rules on-chain, and shown only to you.</p>
+      <div class="actions">
+        <button class="btn btn-solid btn-sm" type="button" data-open-pick>Open the secret file</button>
+        <input type="file" accept="application/json,.json" data-open-file hidden>
+      </div>
+      <ul class="safe-list" data-open-list></ul>
+      <figure class="safe-view" data-view hidden>
+        <img class="art-img" alt="" data-view-img hidden>
+        <p class="mint-note" data-view-drawing>Drawing from its seed…</p>
+        <figcaption class="piece-caption"><span data-view-caption></span><span class="caption-acts"><button class="btn btn-sm" type="button" data-view-png="clear" hidden>Transparent PNG</button><button class="btn btn-sm" type="button" data-view-png="white" hidden>White PNG</button><button class="btn btn-sm" type="button" data-view-close>Close</button></span></figcaption>
+      </figure>
+      <p class="mint-message" role="status" aria-live="polite" data-open-msg></p>
+    </section>
+
+    <section class="safe-step" data-step-claim hidden>
+      <h2 class="safe-h">5 · Claim from the Safe</h2>
+      <p class="mint-note safe-note">Claiming gives each edition its own contract, holding its one token, in your Safe. There is no rush. Each claim deploys a full contract (about 5.5 million gas), so one Safe transaction claims at most two. Load each file in the Transaction Builder as in step 3, ideally when gas is low.</p>
+      <div class="actions" data-claim-files></div>
+      <p class="mint-message" role="status" aria-live="polite" data-claim-msg></p>
+    </section>
+
+    <p class="mint-note safe-foot">Ordinary wallets (MetaMask, Rabby and the like) don't need this page: make the viewing key on the <a href="drops/artifacts.html#yours">drop page</a>, under Yours. This page covers editions your Safe minted. For a piece it received by transfer or bought on the market, the format is in <a href="agents.md">agents.md</a>, "See what you collect".</p>
+  </div>
+</main>
+
+<footer class="footer-bar">
+  <div class="wrap">
+    <span>© 2026 Proof House</span>
+    <span><a href="index.html#drops">Drops</a> · <a href="agents.html">For agents</a> · <a href="review.html">Review submissions</a> · <a href="docs.html">Docs</a></span>
+  </div>
+</footer>
+<script src="deployment.js?v=133224b849"></script>
+<script src="mint.js?v=c3a8911ae3"></script>
+<script src="sealcrypto.js?v=28f1fd9806"></script>
+<script src="safe.js?v=3088ec1147"></script>
+</body>
+</html>

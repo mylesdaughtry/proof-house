@@ -149,7 +149,7 @@
     const set = (k, v, n) => { $(`[data-stat="${k}"]`).textContent = v; $(`[data-stat-note="${k}"]`).textContent = n; };
     const pct = stats.supply ? (100 * stats.listed) / stats.supply : 0;
     set('floor', stats.floor !== null ? eth(stats.floor) : 'none', stats.floor !== null ? 'lowest listing' : 'nothing listed yet');
-    set('listed', `${pct && pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`, `${stats.listed} of ${stats.supply} piece${stats.supply === 1 ? '' : 's'}`);
+    set('listed', `${pct && pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`, `${stats.listed} of ${stats.supply} owned piece${stats.supply === 1 ? '' : 's'}`);
     set('volume', eth(stats.primary + stats.resale), `${W.units(stats.primary)} primary · ${W.units(stats.resale)} resale`);
     set('holders', String(stats.holders), stats.holders === 1 ? 'wallet' : 'unique wallets');
   }
@@ -159,7 +159,7 @@
     const me = W.account();
     const listed = pieces.filter(C.isListed);
     const forSale = listed.filter((p) => !(me && (p.owner === me || p.escrow.buyer === me)));
-    $('[data-listed-meta]').textContent = `${listed.length} listed · ${pieces.length} piece contract${pieces.length === 1 ? '' : 's'} on-chain`;
+    $('[data-listed-meta]').textContent = `${listed.length} listed · ${pieces.length} claimed, so listable`;
     C.paint($('[data-listed]'), forSale.length ? forSale.map((p) => {
       const e = p.escrow;
       if (e.buyer !== W.ZERO) return card(p, `<p class="price">${eth(e.price)}</p><p class="state">In escrow: a buyer has paid.</p>`);
@@ -167,7 +167,7 @@
       // or the previous owner)
       if (!p.hasKey) return card(p, `<p class="price">${eth(e.price)}</p><p class="state">seller ${W.short(e.seller)} · not buyable yet: the seller doesn't hold its key</p>`);
       return card(p, `<p class="price">${eth(e.price)}</p><p class="state">seller ${W.short(e.seller)}</p>${btn(`data-buy="${p.address}"`, `Buy · ${eth(e.price)}`, true)}`);
-    }).join('') : '<p class="empty">Nothing is listed right now. Owners list from here once their piece is claimed.</p>');
+    }).join('') : `<p class="empty">Nothing is listed right now. A piece is listed from here once it's claimed into its own contract. Hold an edition that isn't claimed yet? <a href="${C.esc((W.cfg.houseUrl || '') + '#yours')}" target="_blank" rel="noopener">Claim it on Proof House ↗</a>, then list it here.</p>`);
 
     const mine = me ? pieces.filter((p) => p.owner === me || p.escrow.buyer === me || p.pending > 0n || owesKey(p, me)) : [];
     const sec = $('[data-yours]');

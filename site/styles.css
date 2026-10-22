@@ -703,7 +703,10 @@ a:hover { color: var(--blue); }
 .dl-next .dl-name { color: var(--ink); }
 
 /* How + proof */
-.pillars-4 { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+.pillars-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* four cards never wrap 3 + 1 (the ink background would fill the empty cell): four, then two by two, then one */
+@media (max-width: 1100px) { .pillars-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .pillars-4 { grid-template-columns: minmax(0, 1fr); } }
 .proof-facts { margin: 0; }
 
 @media (max-width: 900px) {
@@ -1109,3 +1112,41 @@ p.handover-label { margin-top: 0; }
 .pass-cards { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px 0 6px; }
 .pass-cards svg { width: min(240px, 100%); height: auto; display: block; box-shadow: 8px 8px 0 rgba(20, 20, 20, 0.12); }
 .pass-cards-note { margin-top: 4px; }
+/* Safe viewing key page (safe.html): ARTIFACTS for Safes and other smart-contract wallets */
+.safe-page { max-width: 820px; padding-top: 48px; padding-bottom: 64px; }
+.safe-step { border-top: 2px solid var(--ink); padding: 22px 0 8px; margin-top: 18px; }
+.safe-h { margin: 0 0 12px; font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; }
+.safe-note { font-size: 13px; line-height: 1.65; margin: 0 0 14px; }
+.safe-warn { font-size: 13px; line-height: 1.65; margin: 0 0 14px; color: #A3271C; }
+.safe-facts { margin: 16px 0 0; }
+.safe-facts dd { font-size: 13px; }
+.safe-manual { margin: 14px 0 0; font-size: 13px; }
+.safe-manual summary { cursor: pointer; color: var(--ink-2); }
+.safe-list { list-style: none; padding: 0; margin: 16px 0 0; border-top: 1.5px solid var(--ink); }
+.safe-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid rgba(20, 20, 20, 0.15); font-size: 13px; }
+.safe-view { margin: 20px 0 0; max-width: 560px; }
+.safe-locked { opacity: 0.45; pointer-events: none; }
+.safe-foot { margin-top: 32px; }
+.safe-check { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 0; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.safe-check input { margin-top: 3px; }
+/* the viewing key: one clear step at the top of Yours, and a bar that points to it from anywhere on the page */
+.vk-callout { border: 2px solid var(--ink); background: #FFF8D6; padding: 18px 20px; margin: 18px 0 22px; box-shadow: 6px 6px 0 var(--ink); scroll-margin: 120px; }
+.vk-callout:focus { outline: none; }
+.vk-callout-t { margin: 0 0 12px; line-height: 1.6; }
+.vk-callout-acts { margin: 0 0 10px; }
+.vk-callout.vk-flash { animation: vk-flash 1.6s ease-out 1; }
+@keyframes vk-flash { 0%, 40% { box-shadow: 0 0 0 6px #F2C94C, 6px 6px 0 var(--ink); } 100% { box-shadow: 6px 6px 0 var(--ink); } }
+.vk-bar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 16px;
+  width: min(760px, calc(100vw - 32px)); padding: 12px 14px 12px 20px; background: var(--ink); color: var(--cream); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); }
+.vk-bar-t { flex: 1; font-size: 13px; line-height: 1.5; }
+.vk-bar-go { flex: none; white-space: nowrap; gap: 8px; }
+@media (max-width: 560px) { .vk-bar { flex-direction: column; align-items: stretch; gap: 10px; } .vk-bar-go { text-align: center; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .vk-callout.vk-flash { animation: none; } }
+.safe-return { margin: 12px 0 0; }
+.flow-list.flow-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .flow-list.flow-4 { grid-template-columns: minmax(0, 1fr); } .flow-list.flow-4 li + li { border-left: 0; border-top: 1.5px solid var(--ink); } .flow-live.flow-4 li.is-now { box-shadow: inset 3px 0 0 var(--ink); } }
+.house-idea { max-width: 760px; }
+.house-acts { margin: 0 0 8px; }
+/* three cards never wrap 2 + 1 either: three across, then stacked */
+.pillars:not(.pillars-4) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .pillars:not(.pillars-4) { grid-template-columns: minmax(0, 1fr); } }

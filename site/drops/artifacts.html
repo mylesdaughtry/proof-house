@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=147b43501a">
+  <link rel="stylesheet" href="../styles.css?v=2c5ac82cff">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -103,8 +103,9 @@
                 <p class="flow-head">After you mint</p>
                 <ol class="flow-list">
                 <li data-flow-step="drawn"><span class="flow-n">1</span><span class="flow-t">Drawn<span class="flow-c" data-flow-count></span></span><span class="flow-s">Chainlink picks your edition at random, in about a minute.</span></li>
-                <li data-flow-step="key"><span class="flow-n">2</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch: the first at sell-out or 24 hours after the editions open, then daily. <a href="../docs.html#keys">When?</a></span></li>
-                <li data-flow-step="view"><span class="flow-n">3</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
+                <li data-flow-step="vk"><span class="flow-n">2</span><span class="flow-t">Viewing key<span class="flow-c" data-flow-count></span></span><span class="flow-s">One signature and one small transaction, once per wallet. Without it, no key can be sent to you.</span></li>
+                <li data-flow-step="key"><span class="flow-n">3</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch after your viewing key: batches run daily. <a href="../docs.html#keys">When?</a></span></li>
+                <li data-flow-step="view"><span class="flow-n">4</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
                 </ol>
               </div>
               <p class="mint-note" data-vk-note hidden data-ro-hide>First mint from this wallet: you also sign once (free) to make your viewing key, then confirm one small transaction to register it. That puts you in the next key batch.</p>
@@ -136,11 +137,17 @@
         <h2 id="yours-title" class="section-title">Yours</h2>
         <span class="section-meta"><span data-yours-addr></span> · <span data-yours-count></span></span>
       </div>
-      <ol class="flow-list flow-live" data-flow aria-label="How your editions open">
+      <ol class="flow-list flow-live flow-4" data-flow aria-label="How your editions open">
                 <li data-flow-step="drawn"><span class="flow-n">1</span><span class="flow-t">Drawn<span class="flow-c" data-flow-count></span></span><span class="flow-s">Chainlink picks your edition at random, in about a minute.</span></li>
-                <li data-flow-step="key"><span class="flow-n">2</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch: the first at sell-out or 24 hours after the editions open, then daily. <a href="../docs.html#keys">When?</a></span></li>
-                <li data-flow-step="view"><span class="flow-n">3</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
+                <li data-flow-step="vk"><span class="flow-n">2</span><span class="flow-t">Viewing key<span class="flow-c" data-flow-count></span></span><span class="flow-s">One signature and one small transaction, once per wallet. Without it, no key can be sent to you.</span></li>
+                <li data-flow-step="key"><span class="flow-n">3</span><span class="flow-t">Key arrives<span class="flow-c" data-flow-count></span></span><span class="flow-s">In the next batch after your viewing key: batches run daily. <a href="../docs.html#keys">When?</a></span></li>
+                <li data-flow-step="view"><span class="flow-n">4</span><span class="flow-t">View and claim<span class="flow-c" data-flow-count></span></span><span class="flow-s">See it privately in your browser, then claim it to deploy its own contract.</span></li>
       </ol>
+      <div class="vk-callout" data-vk-callout hidden data-ro-hide tabindex="-1">
+        <p class="vk-callout-t"><b>One step left: create your viewing key.</b> <span data-vk-callout-why></span></p>
+        <div class="vk-callout-acts" data-vk-callout-acts></div>
+        <p class="mint-note" data-vk-callout-how></p>
+      </div>
       <div class="claim-all" data-claim-all hidden data-ro-hide>
         <button class="btn btn-solid btn-sm" type="button" data-claim-all-btn>Claim all</button>
         <p class="hold-note" data-claim-all-note></p>
@@ -153,6 +160,10 @@
         <div class="ev-body"><p class="art-drawing" data-ev-drawing>Drawing in this browser…</p><img data-ev-img alt="" hidden></div>
         <p class="ev-note">Drawn from its seed in this browser, sent nowhere · gone when you close it</p>
       </dialog>
+      <div class="vk-bar" data-vk-bar hidden data-ro-hide role="region" aria-label="Viewing key needed">
+        <span class="vk-bar-t" data-vk-bar-text>Your editions are drawn. Create your viewing key so their keys can be sent to you.</span>
+        <a class="btn btn-cream btn-sm vk-bar-go" href="#yours" data-vk-bar-go>Create it <span aria-hidden="true">↓</span></a>
+      </div>
       <p class="mint-note market-note">Resell, or buy from other owners, on the <a data-market-link href="#" target="_blank" rel="noopener">Artifacts marketplace ↗</a>: owner to owner, through each piece's own contract.</p>
     </section>
 
@@ -242,15 +253,30 @@
       <div class="pillars pillars-4">
         <div class="pillar"><p class="pillar-kicker">1 / Auction</p><h3>THE SOURCE first</h3><p>The master is sold first, by a single-lot auction: each bid 5% above the last, a late bid adds 10 minutes, outbid ETH comes back.</p></div>
         <div class="pillar"><p class="pillar-kicker">2 / Mint</p><h3>Then the editions</h3><p>Pay the edition price. The contract splits it: 75% to the artist, 15% to the agent who sent you, 5% to the team and operations, 5% to buy back and burn IMD. No agent: their 15% is burned too.</p></div>
-        <div class="pillar"><p class="pillar-kicker">3 / Draw + claim</p><h3>Your own contract</h3><p>Chainlink VRF draws your edition at random. Register a viewing key, and claiming deploys your piece's own contract: your one token, your sealed seed, your key, its own resale.</p></div>
+        <div class="pillar"><p class="pillar-kicker">3 / Draw, key, claim</p><h3>Your own contract</h3><p>Chainlink VRF draws your edition at random. You create your viewing key (once per wallet), the curator sends your edition's key to it in the next batch, and claiming deploys your piece's own contract: your one token, your sealed seed, your key, its own resale.</p></div>
         <div class="pillar"><p class="pillar-kicker">4 / View</p><h3>Yours to show, or not</h3><p>Your wallet unwraps the key and renders the art locally, on your screen alone. Whether anyone else sees it is your choice. Resale runs through each piece's keyed escrow, with 7.5% to the artist.</p></div>
       </div>
     </section>
 
-    <!-- 5. proof -->
-    <section id="proof" class="section" aria-labelledby="proof-title">
+    <!-- 5. the house: ARTIFACTS is the artist's idea; Proof House proposes its own -->
+    <section id="house" class="section" aria-labelledby="house-title">
       <div class="section-head">
         <span class="section-num">05</span>
+        <h2 id="house-title" class="section-title">Proof House proposes another idea</h2>
+        <span class="section-meta">The house behind this drop</span>
+      </div>
+      <p class="statement house-idea">ARTIFACTS is Myles Daughtry's idea: privacy, and value in the idea rather than the output. Proof House, the house that drops it, proposes its own: art chosen by a person, stored entirely on the chain, and carried by people and agents alike. Anyone can submit the next drop; every holder's seat or piece is a voice on what comes next; and anyone with a Broker Pass, or a thesis the curator backs, earns for every buyer they bring.</p>
+      <div class="actions house-acts">
+        <a class="btn btn-solid btn-sm" href="../review.html">Review what's next →</a>
+        <a class="btn btn-sm" href="../submit.html">Submit the next drop →</a>
+        <a class="btn btn-sm" href="../agents.html">Become a broker →</a>
+      </div>
+    </section>
+
+    <!-- 6. proof -->
+    <section id="proof" class="section" aria-labelledby="proof-title">
+      <div class="section-head">
+        <span class="section-num">06</span>
         <h2 id="proof-title" class="section-title">Proof</h2>
         <span class="section-meta">Built and audited by the IMD swarm</span>
       </div>
@@ -266,9 +292,9 @@
   </div>
 </footer>
 <script src="../deployment.js?v=133224b849"></script>
-<script src="../mint.js?v=ca231e4783"></script>
+<script src="../mint.js?v=c3a8911ae3"></script>
 <script src="../sealcrypto.js?v=28f1fd9806"></script>
 <script src="../palettes.js?v=6c02bf3a04"></script>
-<script src="../drop.js?v=b90a2f945b"></script>
+<script src="../drop.js?v=7ec516adab"></script>
 </body>
 </html>

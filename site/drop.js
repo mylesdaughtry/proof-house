@@ -244,6 +244,13 @@
     S.mine = decodeUintArray(list);
     S.minted = mintedR ? Number(mintedR[0]) : S.mine.length; // older factories: the drawn count
     S.viewingKey = viewingKey;
+    if (S.codeFor !== me) {
+      // a Safe or another smart-contract wallet can't give the signature a viewing key is made from (an EIP-7702
+      // account still signs as an ordinary wallet)
+      const code = await W.rpc('eth_getCode', [me, 'latest']).catch(() => '0x');
+      S.contractWallet = !!code && code !== '0x' && !/^0xef0100/i.test(code);
+      S.codeFor = me;
+    }
     await Promise.all(S.mine.map(async (e) => {
       const [[piece], keyRet] = await Promise.all([
         W.read(A.factory, 'pieceContract(uint256)(address)', [e]),
@@ -350,11 +357,13 @@
   // Bid history from the contract's Bid events, scanned in windows from the deployment block.
   const BID = W.keccakHex('Bid(address,address,uint256,uint64)');
   let bids = [];
+  let bidsUnread = false; // the history could not be read (an RPC refused the log range): never shown as "no bids"
   const blockTimes = {};
   async function readBids() {
     if (!drop.deployBlock) return;
     const logs = await W.logs({ address: A.source, topics: [BID] }, drop.deployBlock);
     bids = logs.map((l) => ({ bidder: '0x' + l.topics[1].slice(26), amount: BigInt('0x' + l.data.slice(2, 66)), block: l.blockNumber, tx: l.transactionHash }));
+    bidsUnread = false;
     await Promise.all(bids.slice(-12).filter((b) => !blockTimes[b.block]).map(async (b) => {
       const blk = await W.rpc('eth_getBlockByNumber', ['0x' + b.block.toString(16), false]);
       blockTimes[b.block] = Number(BigInt(blk.timestamp));
@@ -377,7 +386,7 @@
     try {
       await Promise.all([readSale(), readSource()]);
       render(); // show the sale and the auction now; the archive and your editions follow
-      await Promise.all([readTraits(), readMine(), readBids().catch(() => {})]);
+      await Promise.all([readTraits(), readMine(), readBids().catch(() => { bidsUnread = !bids.length; })]);
       clearReadError();
     } catch (e) {
       if (!busy) say(msg, e.code === 'NO_CODE' ? `No contract answered on ${cfg.chainName}. Check deployment.js.` : 'Could not read the chain just now. Retrying…', 'error');
@@ -552,6 +561,38 @@
     el.innerHTML = html;
   }
 
+  // ---------- the viewing key: one step, and a bar that points to it from anywhere on the page ----------
+
+  let vkNeeded = false;
+  let vkInView = false;
+  function vkBar(needed) {
+    vkNeeded = needed;
+    const bar = $('[data-vk-bar]');
+    bar.hidden = !(vkNeeded && !vkInView);
+    if (!bar.hidden) {
+      const n = (S.mine || []).length;
+      $('[data-vk-bar-text]').textContent = S.contractWallet
+        ? 'Minted with a Safe? It needs a viewing key before its keys can be sent.'
+        : n ? `Chainlink has drawn ${n === 1 ? 'your edition' : `your ${n} editions`}. Create your viewing key so ${n === 1 ? 'its key' : 'their keys'} can be sent to you.`
+          : 'Your edition is being drawn. Create your viewing key so its key can be sent to you.';
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => { vkInView = entries.some((en) => en.isIntersecting); vkBar(vkNeeded); }, { threshold: 0.6 })
+      .observe($('[data-vk-callout]'));
+  }
+  function goToKey(ev) {
+    ev.preventDefault();
+    const box = $('[data-vk-callout]');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    box.classList.remove('vk-flash');
+    void box.offsetWidth; // restart the highlight
+    box.classList.add('vk-flash');
+    setTimeout(() => { const b = box.querySelector('[data-ed-vk], a'); if (b) b.focus({ preventScroll: true }); }, 500);
+  }
+  $('[data-vk-bar-go]').addEventListener('click', goToKey);
+  document.addEventListener('click', (ev) => { if (ev.target.closest('[data-vk-jump]')) goToKey(ev); });
+
   function renderMine() {
     const me = W.account();
     const sec = $('[data-yours]');
@@ -559,7 +600,7 @@
     const drawing = Math.max(S.pending.length, S.minted - S.mine.length);
     const total = S.mine.length + drawing;
     sec.hidden = !me || total === 0;
-    if (sec.hidden) return;
+    if (sec.hidden) { vkBar(false); return; }
     $('[data-yours-addr]').textContent = W.short(me);
     $('[data-yours-count]').textContent = `${S.mine.length} drawn${drawing ? ` · ${drawing} drawing` : ''}`;
     // The three steps every edition goes through, with this wallet's editions counted at each; the first step that
@@ -571,7 +612,26 @@
       else if (st.keyPosted) counts.view += 1;
       else counts.key += 1;
     });
-    const at = counts.drawn ? 'drawn' : counts.key ? 'key' : 'view';
+    // the four steps every edition goes through: drawn, this wallet's viewing key, its key, then view and claim
+    const hasKey = !noViewingKey();
+    const at = counts.drawn ? 'drawn' : (counts.key && !hasKey) ? 'vk' : counts.key ? 'key' : 'view';
+    // no viewing key yet, with editions drawn or drawing: one clear step at the top of Yours, and a bar pointing to it
+    const needKey = noViewingKey() && (counts.drawn + counts.key) > 0;
+    $('[data-vk-callout]').hidden = !needKey;
+    if (needKey) {
+      const n = counts.key;
+      $('[data-vk-callout-why]').textContent = n
+        ? `Chainlink has drawn ${n === 1 ? 'your edition' : `your ${n} editions`}. ${n === 1 ? 'Its key' : 'Their keys'} can only be sent to a wallet with a viewing key, and keys go out in batches: make it now so you're in the next one.`
+        : 'Chainlink is drawing your edition now. Make your viewing key meanwhile, so its key can be sent in the next batch.';
+      const acts = S.contractWallet
+        ? `<a class="btn btn-solid btn-sm" href="../safe.html?wallet=${esc(me)}">Make it on the Safe page →</a>`
+        : `<button class="btn btn-solid btn-sm" type="button" data-ed-vk ${busy ? 'disabled' : ''}>Create your viewing key</button>`;
+      if ($('[data-vk-callout-acts]').dataset.html !== acts) { $('[data-vk-callout-acts]').dataset.html = acts; $('[data-vk-callout-acts]').innerHTML = acts; }
+      $('[data-vk-callout-how]').innerHTML = S.contractWallet
+        ? 'This wallet is a smart-contract wallet (a Safe?), which can\'t give the one signature a viewing key is made from. The Safe page makes one for it instead.'
+        : 'One signature (free) makes it in this browser, then one small transaction registers it. It covers every edition this wallet holds. <a href="../docs.html#keys">When do keys arrive?</a>';
+    }
+    vkBar(needKey);
     // a claimed edition is a review voice: point its holder at the Review page
     const ownClaimed = S.mine.some((e) => { const st = S.editions[e] || {}; return st.piece && st.piece !== W.ZERO && st.owner === me; });
     $('[data-yours-review]').hidden = !ownClaimed;
@@ -584,13 +644,15 @@
         ? 'One transaction deploys each one its own contract.'
         : 'One confirmation for each, one after another.';
     }
-    const order = ['drawn', 'key', 'view'];
+    const order = ['drawn', 'vk', 'key', 'view'];
     $('[data-flow]').querySelectorAll('[data-flow-step]').forEach((li) => {
       const step = li.dataset.flowStep;
       li.classList.toggle('is-now', step === at);
-      li.classList.toggle('is-done', order.indexOf(step) < order.indexOf(at));
+      // the viewing key is done once registered, whatever stage the editions are at
+      li.classList.toggle('is-done', step === 'vk' ? hasKey : order.indexOf(step) < order.indexOf(at));
       li.querySelector('[data-flow-count]').textContent = step === 'drawn' ? (counts.drawn ? `${counts.drawn} drawing` : '')
-        : step === 'key' ? (counts.key ? (noViewingKey() ? `${counts.key} need your viewing key` : `${counts.key} waiting`) : '')
+        : step === 'vk' ? (hasKey ? 'done' : 'needed')
+        : step === 'key' ? (counts.key ? (hasKey ? `${counts.key} waiting` : `${counts.key} on hold`) : '')
         : [counts.view ? `${counts.view} ready` : '', counts.claimed ? `${counts.claimed} claimed` : ''].filter(Boolean).join(', ');
     });
     const off = busy ? 'disabled' : '';
@@ -632,7 +694,7 @@
       } else if (st.keyPosted) {
         action = `<p class="hold-note ok">Your key is here. View it now, and claim it to deploy its own contract.</p><div class="hold-btns"><button class="btn btn-solid btn-sm" type="button" data-claim="${e}" ${busy ? 'disabled' : ''} title="Deploys this edition's own contract, held by you">Claim</button>${view}</div>`;
       } else if (noViewingKey()) {
-        action = `<p class="hold-note">Create your viewing key now: keys go out in batches, only to wallets that have one. <a href="../docs.html#keys">When?</a></p><button class="btn btn-solid btn-sm" type="button" data-ed-vk ${busy ? 'disabled' : ''}>Create your viewing key</button>`;
+        action = '<p class="hold-note">Needs your viewing key: keys go out in batches, only to wallets that have one. <a href="#yours" data-vk-jump>Create it above ↑</a></p>';
       } else if (S.nets && st.assignedAt && chainNowS() >= st.assignedAt + S.nets.keyWait) {
         // the key is a month late: the token can be claimed now, and the key can still arrive into its contract
         action = `<p class="hold-note">Its key is over 30 days late. Claim the token now: the key can still arrive later, into its own contract.</p><div class="hold-btns"><button class="btn btn-sm" type="button" data-claim="${e}" ${busy ? 'disabled' : ''}>Claim without the key</button></div>`;
@@ -932,7 +994,11 @@
 
   function renderBids(me) {
     const ol = $('[data-bids]');
-    if (!bids.length) { ol.innerHTML = '<li class="bids-empty">No bids yet.</li>'; return; }
+    if (!bids.length) {
+      const src = S.source || {};
+      ol.innerHTML = `<li class="bids-empty">${bidsUnread ? (src.settled ? 'The bid history could not be read just now. The result above is read from the contract.' : 'The bid history could not be read just now. It will appear on the next refresh.') : 'No bids yet.'}</li>`;
+      return;
+    }
     const now = Math.floor(Date.now() / 1000);
     const ago = (t) => { if (!t) return ''; const d = now - t; return d < 60 ? 'just now' : d < 3600 ? `${Math.floor(d / 60)} min ago` : d < 86400 ? `${Math.floor(d / 3600)} h ago` : new Date(t * 1000).toLocaleDateString(); };
     ol.innerHTML = bids.slice(-12).reverse().map((b, i) => {
